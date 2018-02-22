@@ -17,23 +17,26 @@ ivars = VarParsing.VarParsing('analysis')
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIHardProbes/RECO/D0Meson-PromptReco-v1/000/262/735/00000/6E423E98-5C99-E511-B72B-02163E0138EE.root'#HIHardProbes
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIHardProbes/RECO/D0Meson-PromptReco-v1/000/262/735/00000/E67242E4-5E99-E511-947B-02163E0127B4.root'#HIHardProbes
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/726/00000/EE7F4A63-4599-E511-9CE5-02163E013850.root'#HIMinimumBias1
-ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias2/AOD/PromptReco-v1/000/262/548/00000/FA165E36-1F9A-E511-9D40-02163E011B92.root'#HIMinimumBias2
+#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias2/AOD/PromptReco-v1/000/262/548/00000/FA165E36-1F9A-E511-9D40-02163E011B92.root'#HIMinimumBias2
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias2/AOD/PromptReco-v1/000/263/757/00001/FCC156B2-F0BA-E511-95B6-02163E0146FF.root'#HIMinimumBias2
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias3/AOD/PromptReco-v1/000/263/233/00000/048B4DED-38A7-E511-8C73-02163E01183A.root'#HIMinimumBias3
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias3/AOD/PromptReco-v1/000/263/757/00001/FA43C598-BCBA-E511-BAA9-02163E0119F8.root'#HIMinimumBias3
+ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/PbPb_HiMB5_n10952.root'
+
 ivars.outputFile='finder_PbPb.root'
 ivars.parseArguments()# get and parse the command line arguments
 
 ### Custom options
 ########## MUST CUSTOMIZE THE FOLLOWING THREE ##########
 ### PbPb B/Dfinder recommended setting, choose only one from them or set all to false and made your own setting
+PbPbDs = 1
 PbPbBdefault = 0
 PbPbBs = 0
 PbPbDHPdefault = 0
 PbPbDMBdefault = 0
 PbPbBD0PiHP = 0
-PbPbBD0PiMB = 1
-optSum = PbPbBdefault + PbPbBs + PbPbDHPdefault + PbPbDMBdefault + PbPbBD0PiHP + PbPbBD0PiMB 
+PbPbBD0PiMB = 0
+optSum = PbPbDs + PbPbBdefault + PbPbBs + PbPbDHPdefault + PbPbDMBdefault + PbPbBD0PiHP + PbPbBD0PiMB 
 
 ### Run on MC?
 runOnMC = False
@@ -278,6 +281,25 @@ if (PbPbBdefault or PbPbBs) and optSum is 1:
         process.Bfinder.doTkPreCut = cms.bool(True)    
     process.p = cms.Path(process.BfinderSequence)
 ## PbPb Dfinder setting on HardProbe
+if PbPbDs and optSum is 1:
+		process.Dfinder.makeDntuple = cms.bool(False)
+		process.Dfinder.printInfo = cms.bool(False)
+		process.Dfinder.tkPtCut = cms.double(1.0)#before fit
+		process.Dfinder.tkEtaCut = cms.double(1.5)
+		process.Dfinder.dPtCut = cms.vdouble(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)#before fit
+		process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.)
+		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+		process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 4.0, 4.0, 0., 0., 0., 0., 0., 0.)
+		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0., 0., 0., 0., 0., 0.)
+		process.Dfinder.Dchannel = cms.vint32(0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
+#    process.Dfinder.alphaCut = cms.vdouble(999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 0.2, 0.2)
+#    process.Dfinder.dRapidityCut = cms.vdouble(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 1.1, 1.1)
+#    process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.05)
+		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+		process.p = cms.Path(process.DfinderSequence)
+#    process.p = cms.Path(process.hiOfflinePrimaryVertices * process.hiBestOfflinePrimaryVertex * process.DfinderSequence)
 if PbPbDHPdefault and optSum is 1:
     process.Dfinder.tkPtCut = cms.double(2.5)#before fit
     process.Dfinder.dPtCut = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)#before fit
