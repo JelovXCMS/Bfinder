@@ -1945,16 +1945,16 @@ class DntupleBranches
                       }
                   }
               }
-            if(DInfo->rftk2_index[j]>-1)
+            if(DInfo->rftk3_index[j]>-1)  //original rftk2, should be 3 for phi kk mode
               {
-                if(TrackInfo->geninfo_index[DInfo->rftk2_index[j]]>-1)
+                if(TrackInfo->geninfo_index[DInfo->rftk3_index[j]]>-1)
                   {
-                    if(GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]>-1)
+                    if(GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]>-1)
                       {
-                        if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]])==DpdgId &&
-                           GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]==dGenIdxRes)
+                        if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]])==DpdgId &&
+                           GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]==dGenIdxRes)
                           {
-                            if(TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]])==PION_PDGID)
+                            if(TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]])==PION_PDGID)
                               {
                                 Dgen[typesize]+=20000;
                               }

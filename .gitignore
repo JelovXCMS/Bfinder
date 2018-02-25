@@ -1,6 +1,15 @@
 .#*
 *~
 
+# specific folder or files not to be included
+
+test/ParticleUtil/*
+test/check/*
+test/ntGen.C
+test/ntGen.h
+test/test_finder_pp_75X_cfg.py
+
+
 # plots flies
 
 *.pdf

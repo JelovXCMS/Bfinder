@@ -23,7 +23,7 @@ config.Data.inputDataset = '/HIMinimumBias${mbN}/HIRun2015-PromptReco-v1/AOD'
 config.Data.inputDBS ='global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 2
-config.Data.outLFNDirBase = '/store/user/%s/Ds_phikkpi_18220/PbPb_data/cent30100/' % (getUsernameFromSiteDB())
+config.Data.outLFNDirBase = '/store/user/%s/Dsfinder_phikkpi_18220/PbPb_data/cent30100/' % (getUsernameFromSiteDB())
 #config.Data.publication = True
 config.Data.outputDatasetTag = 'Data_PbPb_Ds_phikkpi_HiMB${mbN}'
 

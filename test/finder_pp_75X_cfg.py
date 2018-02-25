@@ -2,6 +2,10 @@ import FWCore.ParameterSet.Config as cms
 process = cms.Process('HiForest')
 
 runOnMC = True
+
+### Set maxEvents
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
+
 import FWCore.ParameterSet.VarParsing as VarParsing
 ivars = VarParsing.VarParsing('analysis')
 #ivars.inputFiles='file:/data/twang/MC_samples/MinBias_TuneCUETP8M1_5p02TeV-pythia8/MinBias_TuneCUETP8M1_5p02TeV_pythia8_pp502Fall15_MCRUN2_71_V1_v1_AOD_CMSSW_7_5_4_20151113/step3_RAW2DIGI_L1Reco_RECO_993_1_q1f.root'
@@ -12,7 +16,9 @@ ivars = VarParsing.VarParsing('analysis')
 
 #ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/promptD_pt4to10_pp.root'
 #ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/pp_data_n29106.root'
-ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_phikkpi_AOD_n128.root'
+#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_phikkpi_AOD_n128.root'
+ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_step12_Reco_phikkpi.root'
+
 
 
 ivars.outputFile='finder_pp.root'
@@ -60,7 +66,7 @@ VtxLabel = "offlinePrimaryVerticesWithBS"
 TrkLabel = "generalTracks"
 
 ### Set maxEvents
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
+### process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10))
 
 ### output module
 process.out = cms.OutputModule("PoolOutputModule",
@@ -258,11 +264,11 @@ if (ppBdefault or ppBs) and optSum is 1:
 ## pp Ds
 if ppDs and optSum is 1:
 		process.Dfinder.makeDntuple = cms.bool(True)
-		process.Dfinder.printInfo = cms.bool(True)
+		process.Dfinder.printInfo = cms.bool(False)
 		process.Dfinder.tkEtaCut = cms.double(1.5)
 		process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
 #		process.Dfinder.dRapidityCut = cms.vdouble(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 1.1, 1.1, 1.1, 1.1)
-#		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.05, 0.05, 0.05)
+#		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.05, 0.05, 0.05, 0.05)
 		process.Dfinder.tkPtCut = cms.double(0.7)#before fit
 		process.Dfinder.dPtCut = cms.vdouble(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)#before fit
 		process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.) # <Val:lowpt  

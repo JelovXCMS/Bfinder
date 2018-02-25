@@ -63,7 +63,7 @@ VtxLabel = "hiSelectedVertex"
 #TrkLabel = "hiGeneralTracks"
 
 ### Set maxEvents
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10))
 
 ### output module
 process.out = cms.OutputModule("PoolOutputModule",

@@ -22,8 +22,8 @@ config.JobType.psetName = '../finder_pp_75X_cfg.py'
 config.Data.inputDataset = '/MinimumBias${mbN}/Run2015E-PromptReco-v1/AOD'
 config.Data.inputDBS ='global'
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 5
-config.Data.outLFNDirBase = '/store/user/%s/Ds_phikkpi_18220/pp_data/' % (getUsernameFromSiteDB())
+config.Data.unitsPerJob = 4
+config.Data.outLFNDirBase = '/store/user/%s/DsDsfinder_phikkpi_18220/pp_data/' % (getUsernameFromSiteDB())
 #config.Data.publication = True
 config.Data.outputDatasetTag = 'Data_pp_Ds_phikkpi_MB${mbN}'
 
