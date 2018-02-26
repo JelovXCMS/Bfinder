@@ -5,11 +5,11 @@ runOnMC = False
 ### Set maxEvents
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
 
-#process.SimpleMemoryCheck = cms.Service("SimpleMemoryCheck",
-#    ignoreTotal = cms.untracked.int32(1),
-#		oncePerEventMode = cms.untracked.bool(True),
-#		showMallocInfo = cms.untracked.bool(True)
-#)
+##process.SimpleMemoryCheck = cms.Service("SimpleMemoryCheck",
+##    ignoreTotal = cms.untracked.int32(1),
+##		oncePerEventMode = cms.untracked.bool(True),
+##		showMallocInfo = cms.untracked.bool(True)
+##)
 
 import FWCore.ParameterSet.VarParsing as VarParsing
 ivars = VarParsing.VarParsing('analysis')

@@ -292,6 +292,9 @@ class DntupleBranches
   float   DgendecayvtxZ[MAX_XB];
   int     DgenfromgenPV[MAX_XB];
 
+  //# later ,modify and add Dgen with from Ds three tracks decay ( but not correct mass match)
+ 
+
   void buildDBranch(TTree* dnt, bool D0kpimode=false, bool detailMode=true)
   {
     //EvtInfo
@@ -627,10 +630,12 @@ class DntupleBranches
   float   Gtk1eta[MAX_GEN];
   float   Gtk1y[MAX_GEN];
   float   Gtk1phi[MAX_GEN];
+  int     Gtk1pdgId[MAX_GEN];
   float   Gtk2pt[MAX_GEN];
   float   Gtk2eta[MAX_GEN];
   float   Gtk2y[MAX_GEN];
   float   Gtk2phi[MAX_GEN];
+  int     Gtk2pdgId[MAX_GEN];
   float   Gtk3pt[MAX_GEN];
   float   Gtk3eta[MAX_GEN];
   float   Gtk3y[MAX_GEN];
@@ -643,10 +648,12 @@ class DntupleBranches
   float   GRestk1eta[MAX_GEN];
   float   GRestk1y[MAX_GEN];
   float   GRestk1phi[MAX_GEN];
+  int     GRestk1pdgId[MAX_GEN];
   float   GRestk2pt[MAX_GEN];
   float   GRestk2eta[MAX_GEN];
   float   GRestk2y[MAX_GEN];
   float   GRestk2phi[MAX_GEN];
+  int     GRestk2pdgId[MAX_GEN];
   float   GRestk3pt[MAX_GEN];
   float   GRestk3eta[MAX_GEN];
   float   GRestk3y[MAX_GEN];
@@ -682,10 +689,14 @@ class DntupleBranches
     nt->Branch("Gtk1eta",Gtk1eta,"Gtk1eta[Gsize]/F");
     nt->Branch("Gtk1y",Gtk1y,"Gtk1y[Gsize]/F");
     nt->Branch("Gtk1phi",Gtk1phi,"Gtk1phi[Gsize]/F");
+    nt->Branch("Gtk1pdgId",Gtk1pdgId,"Gtk1pdgId[Gsize]/I");
+
     nt->Branch("Gtk2pt",Gtk2pt,"Gtk2pt[Gsize]/F");
     nt->Branch("Gtk2eta",Gtk2eta,"Gtk2eta[Gsize]/F");
     nt->Branch("Gtk2y",Gtk2y,"Gtk2y[Gsize]/F");
     nt->Branch("Gtk2phi",Gtk2phi,"Gtk2phi[Gsize]/F");
+    nt->Branch("Gtk2pdgId",Gtk2pdgId,"Gtk2pdgId[Gsize]/I");
+
     nt->Branch("Gtk3pt",Gtk3pt,"Gtk3pt[Gsize]/F");
     nt->Branch("Gtk3eta",Gtk3eta,"Gtk3eta[Gsize]/F");
     nt->Branch("Gtk3y",Gtk3y,"Gtk3y[Gsize]/F");
@@ -698,10 +709,14 @@ class DntupleBranches
     nt->Branch("GRestk1eta",GRestk1eta,"GRestk1eta[Gsize]/F");
     nt->Branch("GRestk1y",GRestk1y,"GRestk1y[Gsize]/F");
     nt->Branch("GRestk1phi",GRestk1phi,"GRestk1phi[Gsize]/F");
+    nt->Branch("GRestk1pdgId",GRestk1pdgId,"GRestk1pdgId[Gsize]/I");
+  
     nt->Branch("GRestk2pt",GRestk2pt,"GRestk2pt[Gsize]/F");
     nt->Branch("GRestk2eta",GRestk2eta,"GRestk2eta[Gsize]/F");
     nt->Branch("GRestk2y",GRestk2y,"GRestk2y[Gsize]/F");
     nt->Branch("GRestk2phi",GRestk2phi,"GRestk2phi[Gsize]/F");
+    nt->Branch("GRestk2pdgId",GRestk2pdgId,"GRestk2pdgId[Gsize]/I");
+
     nt->Branch("GRestk3pt",GRestk3pt,"GRestk3pt[Gsize]/F");
     nt->Branch("GRestk3eta",GRestk3eta,"GRestk3eta[Gsize]/F");
     nt->Branch("GRestk3y",GRestk3y,"GRestk3y[Gsize]/F");
@@ -710,10 +725,14 @@ class DntupleBranches
     nt->Branch("GRestk4eta",GRestk4eta,"GRestk4eta[Gsize]/F");
     nt->Branch("GRestk4y",GRestk4y,"GRestk4y[Gsize]/F");
     nt->Branch("GRestk4phi",GRestk4phi,"GRestk4phi[Gsize]/F");
+
+    //# later,  add Gtk pdgID , save intermediate state
+
   }
   
+        //{{{ makeDNtuple
   void makeDNtuple(int isDchannel[], int Dtypesize[], bool REAL, bool fillZeroCandEvt, bool skim, EvtInfoBranches *EvtInfo, VtxInfoBranches *VtxInfo, TrackInfoBranches *TrackInfo, DInfoBranches *DInfo, GenInfoBranches *GenInfo, TTree* ntD1, TTree* ntD2, TTree* ntD3, TTree* ntD4, TTree* ntD5, TTree* ntD6, TTree* ntD7)
-  {//{{{
+  {
     TVector3* bP = new TVector3;
     TVector3* bVtx = new TVector3;
     TLorentzVector* b4P = new TLorentzVector;
@@ -837,10 +856,12 @@ class DntupleBranches
         Gtk1pt[gsize] = -1;
         Gtk1eta[gsize] = -20;
         Gtk1phi[gsize] = -20;
+        Gtk1pdgId[gsize] = 0.;
         Gtk1y[gsize] = -1;
         Gtk2pt[gsize] = -1;
         Gtk2eta[gsize] = -20;
         Gtk2phi[gsize] = -20;
+        Gtk2pdgId[gsize] = 0.;
         Gtk2y[gsize] = -1;
         Gtk3pt[gsize] = -1;
         Gtk3eta[gsize] = -20;
@@ -853,10 +874,12 @@ class DntupleBranches
         GRestk1pt[gsize] = -1;
         GRestk1eta[gsize] = -20;
         GRestk1phi[gsize] = -20;
+        GRestk1pdgId[gsize] = 0.;
         GRestk1y[gsize] = -1;
         GRestk2pt[gsize] = -1;
         GRestk2eta[gsize] = -20;
         GRestk2phi[gsize] = -20;
+        GRestk2pdgId[gsize] = 0.;
         GRestk2y[gsize] = -1;
         GRestk3pt[gsize] = -1;
         GRestk3eta[gsize] = -20;
@@ -906,16 +929,23 @@ class DntupleBranches
             Gtk1pt[gsize] = GenInfo->pt[GenInfo->da2[j]];
             Gtk1eta[gsize] = GenInfo->eta[GenInfo->da2[j]];
             Gtk1phi[gsize] = GenInfo->phi[GenInfo->da2[j]];
+            Gtk1pdgId[gsize] = GenInfo->pdgId[GenInfo->da2[j]]; 
+            Gtk2pt[gsize] = GenInfo->pt[GenInfo->da1[j]]; // add resonance particle info into tree as tk2 (note different than default order resonance should be first daughter , only test for channel 7&8//
+            Gtk2eta[gsize] = GenInfo->eta[GenInfo->da1[j]];
+            Gtk2phi[gsize] = GenInfo->phi[GenInfo->da1[j]];
+            Gtk2pdgId[gsize] = GenInfo->pdgId[GenInfo->da1[j]];
             bGen->SetPtEtaPhiM(GenInfo->pt[GenInfo->da2[j]],GenInfo->eta[GenInfo->da2[j]],GenInfo->phi[GenInfo->da2[j]],GenInfo->mass[GenInfo->da2[j]]);
             Gtk1y[gsize] = bGen->Rapidity();
             GRestk1pt[gsize] = GenInfo->pt[GenInfo->da1[GenInfo->da1[j]]];
             GRestk1eta[gsize] = GenInfo->eta[GenInfo->da1[GenInfo->da1[j]]];
             GRestk1phi[gsize] = GenInfo->phi[GenInfo->da1[GenInfo->da1[j]]];
+            GRestk1pdgId[gsize] = GenInfo->pdgId[GenInfo->da1[GenInfo->da1[j]]]; 
             bGen->SetPtEtaPhiM(GenInfo->pt[GenInfo->da1[GenInfo->da1[j]]],GenInfo->eta[GenInfo->da1[GenInfo->da1[j]]],GenInfo->phi[GenInfo->da1[GenInfo->da1[j]]],GenInfo->mass[GenInfo->da1[GenInfo->da1[j]]]);
             GRestk1y[gsize] = bGen->Rapidity();
             GRestk2pt[gsize] = GenInfo->pt[GenInfo->da2[GenInfo->da1[j]]];
             GRestk2eta[gsize] = GenInfo->eta[GenInfo->da2[GenInfo->da1[j]]];
             GRestk2phi[gsize] = GenInfo->phi[GenInfo->da2[GenInfo->da1[j]]];
+            GRestk2pdgId[gsize] = GenInfo->phi[GenInfo->pdgId[GenInfo->da1[j]]];
             bGen->SetPtEtaPhiM(GenInfo->pt[GenInfo->da2[GenInfo->da1[j]]],GenInfo->eta[GenInfo->da2[GenInfo->da1[j]]],GenInfo->phi[GenInfo->da2[GenInfo->da1[j]]],GenInfo->mass[GenInfo->da2[GenInfo->da1[j]]]);
             GRestk2y[gsize] = bGen->Rapidity();
             if(GisSignal[gsize]==11||GisSignal[gsize]==12)
@@ -989,6 +1019,7 @@ class DntupleBranches
     BSWidthYErr = EvtInfo->BSWidthYErr;
   }
 
+    //# continue work from here
   void fillDTree(TVector3* bP, TVector3* bVtx, TLorentzVector* b4P, TVector3* boost, TVector3* D3Vec, int j, int typesize, bool REAL, EvtInfoBranches *EvtInfo, VtxInfoBranches *VtxInfo, TrackInfoBranches *TrackInfo, DInfoBranches *DInfo, GenInfoBranches *GenInfo)
   {
     // track four vectors
@@ -2169,7 +2200,7 @@ class DntupleBranches
               }
           }
       }
-    if(dmesontype==7||dmesontype==8)
+    if(dmesontype==7||dmesontype==8) // only check da1 - phi, dau2=pi is that possible pi before phi?
       {
         if(TMath::Abs(GenInfo->pdgId[j])==DSUBS_PDGID&&GenInfo->nDa[j]==2&&GenInfo->da1[j]!=-1&&GenInfo->da2[j]!=-1)
           {

@@ -990,7 +990,7 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                     if (!iEvent.isRealData() && RunOnMC_)
                         genTrackPtr [TrackInfo.size] = tk_it->genParticle();
 
-                    // Fill the same list for DInfo
+                    // Fill the same list for DInfo // original idx is Handle_idx changed to the TrackInfo idx 
                     for(unsigned int iCands=0; iCands < listOfRelativeDCand1.size(); iCands++){
                         DInfo.rftk1_index[listOfRelativeDCand1[iCands]-1] = TrackInfo.size;
                     }
@@ -1083,7 +1083,7 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 */
 
                 bool isGenSignal = false;
-                //save target intermediat state particle
+                //save target intermediate state particle
                 if (
                         abs(int(it_gen->pdgId()/100) % 100) == 4  ||//c menson
                         abs(int(it_gen->pdgId()/100) % 100) == 5  ||//b menson
@@ -1101,7 +1101,14 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                         it_gen->pdgId() == 100443   ||//Psi(2S)
                         it_gen->pdgId() == 553      ||//Upsilon
                         it_gen->pdgId() == 100553     //Upsilon(2S)
+                        || abs(it_gen->pdgId())   == 9010221 //f0(980) // intermediate state for Ds kkpi
+                        || abs(it_gen->pdgId())   == 10221 //f0(1370) 
+                        || abs(it_gen->pdgId())   == 10331 //f0(1710) 
+                        || abs(it_gen->pdgId())   == 10331 //f0(1710) 
+                        || abs(it_gen->pdgId())   == 10311 //K*1430 neutral 
+                      
 
+    
                         //# check here by rui
                    ) isGenSignal = true;//b, c, s mesons
 
@@ -1266,20 +1273,20 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
         //Made a Dntuple on the fly   
         if(makeDntuple_){
             int isDchannel[14];
-            isDchannel[0] = 1; //k+pi-
-            isDchannel[1] = 1; //k-pi+
-            isDchannel[2] = 1; //k-pi+pi+
-            isDchannel[3] = 1; //k+pi-pi-
-            isDchannel[4] = 1; //k-pi-pi+pi+
-            isDchannel[5] = 1; //k+pi+pi-pi-
-            isDchannel[6] = 1; 
-            isDchannel[7] = 1; 
-            isDchannel[8] = 1; 
-            isDchannel[9] = 1; 
-            isDchannel[10] = 1; 
-            isDchannel[11] = 1;
-            isDchannel[12] = 1; //B+(D0(k-pi+)pi+)
-            isDchannel[13] = 1; //B-(D0(k-pi+)pi-)
+            isDchannel[0] = 0; //k+pi-
+            isDchannel[1] = 0; //k-pi+
+            isDchannel[2] = 0; //k-pi+pi+
+            isDchannel[3] = 0; //k+pi-pi-
+            isDchannel[4] = 0; //k-pi-pi+pi+
+            isDchannel[5] = 0; //k+pi+pi-pi-
+            isDchannel[6] = 1; // Ds+ phikkpi+ 
+            isDchannel[7] = 1; // Ds- phikkpi-
+            isDchannel[8] = 0; 
+            isDchannel[9] = 0; 
+            isDchannel[10] = 0; 
+            isDchannel[11] = 0;
+            isDchannel[12] = 0; //B+(D0(k-pi+)pi+)
+            isDchannel[13] = 0; //B-(D0(k-pi+)pi-)
             bool REAL = ((!iEvent.isRealData() && RunOnMC_) ? false:true);
             bool fillZeroCandEvt = true;
             int Dtypesize[7]={0,0,0,0,0,0,0};
@@ -1956,10 +1963,10 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                     std::vector<float> pushbackTrkMassHypo;
                     std::vector<float> pushbackResTrkMassHypo;
                     float tk_sigma;
-                    for(int p = 0; p < int(selectedTkhidxSet[0].size()); p++){        
+                    for(int p = 0; p < int(selectedTkhidxSet[0].size()); p++){       // all Set has same size, could also use [i] as the index for selectedTkhidxSet[i] 
                         temp_vec.SetXYZM(input_tracks[selectedTkhidxSet[i][p]].px(), input_tracks[selectedTkhidxSet[i][p]].py(), input_tracks[selectedTkhidxSet[i][p]].pz(), fabs(TkMassCharge[p].first));
                         unfitted_tktk_4vec += temp_vec;
-                        if(TkMassCharge[p].second==0) continue;
+                        if(TkMassCharge[p].second==0) continue; // push resonace duaghter particle first here, other particle later
                         reco::TransientTrack tkTT(input_tracks[selectedTkhidxSet[i][p]].track(), &(*bField) );
                         if (!tkTT.isValid()) continue;
                         tk_mass = fabs(TkMassCharge[p].first);
@@ -2011,7 +2018,7 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                     }
                     DMassCutLevel[Dchannel_number-1]->Fill(5);
 
-                    double MaximumDoca = Functs.getMaxDoca(tktk_candidate);
+                    double MaximumDoca = Functs.getMaxDoca(tktk_candidate); // Max of all tracks pairs MinimumDistance
                     if (MaximumDoca > MaxDocaCut_[Dchannel_number-1]) continue;
                     DMassCutLevel[Dchannel_number-1]->Fill(6);
 
@@ -2024,13 +2031,13 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                         else tktk_VFT = tktk_fitter.fit(tktk_candidate);
                     }
                     else{
-                        tktk_VFT = tktk_fitter.fit(tktk_candidate);
+                        tktk_VFT = tktk_fitter.fit(tktk_candidate); // this line same as previous one?
                     }
 
                     if(!tktk_VFT->isValid()) continue;
                     DMassCutLevel[Dchannel_number-1]->Fill(7);
 
-                    tktk_VFT->movePointerToTheTop();
+                    tktk_VFT->movePointerToTheTop(); // KinematicTree.cc , make the Tree accessible, pointer to particle, and daughters
                     tktk_VFP   = tktk_VFT->currentParticle();
                     tktk_VFPvtx = tktk_VFT->currentDecayVertex();
                     if (!tktk_VFPvtx->vertexIsValid()) continue;
@@ -2040,7 +2047,7 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                     if(chi2_prob_tktk < VtxChiProbCut_[Dchannel_number-1]) continue;
                     DMassCutLevel[Dchannel_number-1]->Fill(9);
 
-                    tktkCands  = tktk_VFT->finalStateParticles();
+                    tktkCands  = tktk_VFT->finalStateParticles(); // these determine the order of output - rftk
 
                     //cut mass window after fit
                     //if (tktk_VFP->currentState().mass()<mass_window[0] || tktk_VFP->currentState().mass()>mass_window[1]) continue;
@@ -2274,6 +2281,15 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
 
                     tktk_candidate.clear();
                     tktkCands.clear();
+
+                    // Use the trick of swapping with an empty vector to free the memory
+                    //decltype(tktk_4vecs)().swap(tktk_4vecs);
+                    //decltype(tktkRes_4vecs)().swap(tktkRes_4vecs);    
+                    //decltype(tktk_candidate)().swap(tktk_candidate);   
+                    //decltype(tktkRes_candidate)().swap(tktkRes_candidate);
+                    //decltype(tktkCands)().swap(tktkCands);        
+                    //decltype(tktkResCands)().swap(tktkResCands);     
+
                     DInfo.size++;
                 }
             }
