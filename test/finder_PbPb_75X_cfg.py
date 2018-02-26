@@ -1,5 +1,16 @@
 import FWCore.ParameterSet.Config as cms
 process = cms.Process('HiForest')
+
+runOnMC = False
+### Set maxEvents
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
+
+#process.SimpleMemoryCheck = cms.Service("SimpleMemoryCheck",
+#    ignoreTotal = cms.untracked.int32(1),
+#		oncePerEventMode = cms.untracked.bool(True),
+#		showMallocInfo = cms.untracked.bool(True)
+#)
+
 import FWCore.ParameterSet.VarParsing as VarParsing
 ivars = VarParsing.VarParsing('analysis')
 
@@ -23,7 +34,10 @@ ivars = VarParsing.VarParsing('analysis')
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias3/AOD/PromptReco-v1/000/263/757/00001/FA43C598-BCBA-E511-BAA9-02163E0119F8.root'#HIMinimumBias3
 ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/PbPb_HiMB5_n10952.root'
 
-ivars.outputFile='finder_PbPb.root'
+ivars.outputFile='Dsfinder_PbPb.root'
+if runOnMC:
+    ivars.outputFile='Dsfinder_PbPb_mc.root'
+
 ivars.parseArguments()# get and parse the command line arguments
 
 ### Custom options
@@ -63,7 +77,7 @@ VtxLabel = "hiSelectedVertex"
 #TrkLabel = "hiGeneralTracks"
 
 ### Set maxEvents
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10))
+### process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10))
 
 ### output module
 process.out = cms.OutputModule("PoolOutputModule",
@@ -103,6 +117,15 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 #process.load("Configuration.Geometry.GeometryIdeal_cff")
 #process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
 
+#####refit PV with HI vertex fitter###
+process.load('RecoHI.HiTracking.HIPixelAdaptiveVertex_cfi')
+process.hiOfflinePrimaryVertices = process.hiPixelAdaptiveVertex.clone(TrackLabel = cms.InputTag("hiGeneralTracks"))
+process.hiOfflinePrimaryVertices.TkFilterParameters.minSiliconLayersWithHits = cms.int32(5)
+
+process.hiBestOfflinePrimaryVertex = cms.EDFilter("HIBestVertexSelection",src = cms.InputTag("hiOfflinePrimaryVertices"), maxNumber = cms.uint32(1))
+#####
+
+
 ### All relevent GlobalTags
 globalTag = ""
 #MC
@@ -132,7 +155,8 @@ else:
 	#globalTag = 'GR_R_74_V8A::All'##CMSSW_7_4_0_pre8 PbPb
 	#globalTag = 'GR_R_74_V12A::All'##CMSSW_7_4_2 PbPb
 	#globalTag = '75X_dataRun2_v2'##CMSSW_7_5_0 PbPb
-	globalTag = 'auto:run2_data'
+	#globalTag = 'auto:run2_data'
+	globalTag = '75X_dataRun2_v13'
 
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, globalTag, '')
@@ -167,8 +191,8 @@ process.hltanalysis.OfflinePrimaryVertices0 = cms.InputTag(VtxLabel)
     #process.hltanalysis.hltresults = cms.InputTag("TriggerResults","","HISIGNAL")
     #process.hltanalysis.l1GtObjectMapRecord = cms.InputTag("hltL1GtObjectMap::HISIGNAL")
 process.hltAna = cms.Path(process.hltanalysis)
-process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_PbPb_cfi')
-process.hltObj = cms.Path(process.hltobject)
+##process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_PbPb_cfi') ## not necessary for Ds
+##process.hltObj = cms.Path(process.hltobject)
 
 ### Set basic filter
 # Common offline event selection
@@ -290,12 +314,10 @@ if PbPbDs and optSum is 1:
 		process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.)
 		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
 		process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 4.0, 4.0, 0., 0., 0., 0., 0., 0.)
-		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0., 0., 0., 0., 0., 0.)
 		process.Dfinder.Dchannel = cms.vint32(0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
-#    process.Dfinder.alphaCut = cms.vdouble(999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 0.2, 0.2)
-#    process.Dfinder.dRapidityCut = cms.vdouble(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 1.1, 1.1)
-#    process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.05)
+		process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
+		process.Dfinder.dRapidityCut = cms.vdouble(1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 1.2, 10.0, 10.0, 10.0, 10.0)
+		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.02, 0.02, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 		process.p = cms.Path(process.DfinderSequence)

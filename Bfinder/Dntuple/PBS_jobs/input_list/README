@@ -1,0 +1,9 @@
+build filelist by 
+
+ls /mnt/hadoop/store/user/chengchi/Ds_phikkpi_18220/pp_MC/Ds_phikkpi_pp/MC_pp_Ds_phikkpi_pt4/180225_003140/0000/* >filelistname_lis.txt
+
+
+replace /mnt/hadoop/ by  root://xrootd.rcac.purdue.edu/   to let hastead able to reach the file
+
+replace the folderPath & filelistname_lis.txt
+delete extra folder info in file

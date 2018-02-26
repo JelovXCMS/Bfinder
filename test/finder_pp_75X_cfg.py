@@ -21,9 +21,9 @@ ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSamp
 
 
 
-ivars.outputFile='finder_pp.root'
+ivars.outputFile='Dsfinder_pp.root'
 if runOnMC:
-		ivars.outputFile='finder_pp_mc.root'
+		ivars.outputFile='Dsfinder_pp_mc.root'
 ivars.parseArguments()# get and parse the command line arguments
 
 ### Custom options

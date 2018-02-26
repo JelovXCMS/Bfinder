@@ -8,7 +8,13 @@ test/check/*
 test/ntGen.C
 test/ntGen.h
 test/test_finder_pp_75X_cfg.py
+# folders
+test/crab_jobs_MC/crab_projects/*
+test/crab_jobs/crab_projects/*
+Bfinder/Dntuple/pbs_fromRui
 
+Bfinder/Dntuple/PBS_jobs/PBS_job_log
+Bfinder/Dntuple/PBS_jobs/PBS_jobsAll
 
 # plots flies
 

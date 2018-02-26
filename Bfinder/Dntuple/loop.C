@@ -25,10 +25,15 @@ int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb
   else cout<<" - pp";
   cout<<endl;
 
+//	root://xrootd.rcac.purdue.edu//store
+
   TString ifname;
   if(iseos) ifname = Form("root://eoscms.cern.ch//eos/cms%s",infile.Data());
   else ifname = infile;
+//	if(FfromMnt) ifname= Form("root://xrootd.rcac.purdue.edu//store",infile.Data());
   if (!TFile::Open(ifname))   { cout << " fail to open file" << endl; return 0;}
+
+	cout<<"hello"<<endl;
   TFile* f = TFile::Open(ifname);
   TTree* root = (TTree*)f->Get("Dfinder/root");  
   TTree* hltroot = (TTree*)f->Get("hltanalysis/HltTree");
@@ -152,9 +157,14 @@ int main(int argc, char *argv[])
     {
       loop(argv[1], argv[2]);
     }
+	else if(argc==5)
+	{
+      cout<<"real = "<<atoi(argv[3])<<" ,isPbPb = "<<atoi(argv[4])<<endl;
+      loop(argv[1], argv[2],atoi(argv[3]), atoi(argv[4]));
+	}
   else
     {
-      std::cout << "Usage: mergeForest <input_collection> <output_file>" << std::endl;
+      std::cout << "Usage: loop.exe <input_collection> <output_file> <isReal> <isPbPb>" << std::endl;
       return 1;
     }
   
