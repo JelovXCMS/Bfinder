@@ -2,3 +2,9 @@
 2, change the file list, output directory in submit_batchjob_filelist.sh
 3, set the MC or data flag in exec_filebase.sh (first true or false)
 4, ./submit_batchjob_filelist.sh
+
+g++ loop.C $(root-config --cflags --libs) -Wall -O2 -o loop.exe
+
+
+need to add centrality trigger info and other hlt info into selected tree in loop.h
+

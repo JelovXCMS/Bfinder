@@ -4,6 +4,11 @@ ls /mnt/hadoop/store/user/chengchi/Ds_phikkpi_18220/pp_MC/Ds_phikkpi_pp/MC_pp_Ds
 
 
 replace /mnt/hadoop/ by  root://xrootd.rcac.purdue.edu/   to let hastead able to reach the file
+:1,$s/\/mnt\/hadoop/root:\/\/xrootd.rcac.purdue.edu\//gc
+
 
 replace the folderPath & filelistname_lis.txt
 delete extra folder info in file
+
+
+1 file missing in HIMB5 & HIMB6

@@ -6,17 +6,17 @@ using namespace std;
 
 Bool_t istest = false;
 bool fillZeroCandEvt = true;
-int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb=true, Int_t startEntries=0, Int_t endEntries=-1, Bool_t skim=false, Bool_t gskim=true, Bool_t checkMatching=true, Bool_t iseos=false, Bool_t SkimHLTtree=false)
+int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb=true, Int_t startEntries=0, Int_t endEntries=-1, Bool_t skim=true, Bool_t gskim=true, Bool_t checkMatching=true, Bool_t iseos=false, Bool_t SkimHLTtree=false)
 {
   if(istest)
     {
-      infile="/store/group/phys_heavyions/HeavyFlavourRun2/DfinderRun2/MC_official/Pythia8_prompt_D0pt0p0_Pthat0_pp502_TuneCUETP8M1/crab_DfinderMC_pp_20160502_dPt0tkPt0p5_D0Dstar/160502_191346/0000/finder_pp_53.root";
+      infile="/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Dsfinder_pp_mc_detail_phikkpi_n128.root";
       outfile="test.root";
       REAL=false;
       isPbPb=false;
       skim=false;
       checkMatching=true;
-      iseos=true;
+      iseos=false;
     }
   cout<<endl;
   if(REAL) cout<<"--- Processing - REAL DATA";
@@ -62,23 +62,23 @@ int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb
   TFile* outf = TFile::Open(Form("%s", outfile.Data()),"recreate");
 
   int isDchannel[14];
-  isDchannel[0] = 1; //D0(k+pi-)
-  isDchannel[1] = 1; //D0(k-pi+)
-  isDchannel[2] = 1; //D*(D0(k-pi+)pi+)
-  isDchannel[3] = 1; //D*(D0(k+pi-)pi-)
-  isDchannel[4] = 1; //D*(D0(k-pi-pi+pi+)pi+)
-  isDchannel[5] = 1; //D*(D0(k+pi+pi-pi-)pi-)
-  isDchannel[6] = 1; 
-  isDchannel[7] = 1; 
-  isDchannel[8] = 1; 
-  isDchannel[9] = 1; 
-  isDchannel[10] = 1; 
-  isDchannel[11] = 1;
-  isDchannel[12] = 1; //B+(D0(k-pi+)pi+)
-  isDchannel[13] = 1; //B-(D0(k-pi+)pi-)
+  isDchannel[0] = 0; //D0(k+pi-)
+  isDchannel[1] = 0; //D0(k-pi+)
+  isDchannel[2] = 0; //D*(D0(k-pi+)pi+)
+  isDchannel[3] = 0; //D*(D0(k+pi-)pi-)
+  isDchannel[4] = 0; //D*(D0(k-pi-pi+pi+)pi+)
+  isDchannel[5] = 0; //D*(D0(k+pi+pi-pi-)pi-)
+  isDchannel[6] = 1; // Ds+ phikk pi+
+  isDchannel[7] = 1; // Ds- phikk pi-
+  isDchannel[8] = 0; 
+  isDchannel[9] = 0; 
+  isDchannel[10] = 0; 
+  isDchannel[11] = 0;
+  isDchannel[12] = 0; //B+(D0(k-pi+)pi+)
+  isDchannel[13] = 0; //B-(D0(k-pi+)pi-)
 
   cout<<"--- Building trees"<<endl;
-  bool detailMode = true;
+  bool detailMode = false;
   bool D0kpimode = true;
   TTree* ntD1 = new TTree("ntDkpi","");           Dntuple->buildDBranch(ntD1,D0kpimode,detailMode);
   D0kpimode = false;

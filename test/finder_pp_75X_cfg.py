@@ -16,8 +16,8 @@ ivars = VarParsing.VarParsing('analysis')
 
 #ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/promptD_pt4to10_pp.root'
 #ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/pp_data_n29106.root'
-#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_phikkpi_AOD_n128.root'
-ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_step12_Reco_phikkpi.root'
+ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_phikkpi_AOD_n128.root'
+#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_step12_Reco_phikkpi.root'
 
 
 
@@ -168,8 +168,8 @@ process.hltanalysis.OfflinePrimaryVertices0 = cms.InputTag(VtxLabel)
     #process.hltanalysis.hltresults = cms.InputTag("TriggerResults","","HISIGNAL")
     #process.hltanalysis.l1GtObjectMapRecord = cms.InputTag("hltL1GtObjectMap::HISIGNAL")
 process.hltAna = cms.Path(process.hltanalysis)
-process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_cfi')
-process.hltObj = cms.Path(process.hltobject)
+#process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_cfi')
+#process.hltObj = cms.Path(process.hltobject)
 
 ### Set basic filter
 process.load('HeavyIonsAnalysis.JetAnalysis.EventSelection_cff')
@@ -265,17 +265,17 @@ if (ppBdefault or ppBs) and optSum is 1:
 if ppDs and optSum is 1:
 		process.Dfinder.makeDntuple = cms.bool(True)
 		process.Dfinder.printInfo = cms.bool(False)
-		process.Dfinder.tkEtaCut = cms.double(1.5)
+		process.Dfinder.tkEtaCut = cms.double(2.0)
 		process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
-#		process.Dfinder.dRapidityCut = cms.vdouble(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 1.1, 1.1, 1.1, 1.1)
-#		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.05, 0.05, 0.05, 0.05)
+		process.Dfinder.dRapidityCut = cms.vdouble(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1)
+		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0)
 		process.Dfinder.tkPtCut = cms.double(0.7)#before fit
-		process.Dfinder.dPtCut = cms.vdouble(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)#before fit
+		process.Dfinder.dPtCut = cms.vdouble(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)#before fit , 18220 data set 1
 		process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.) # <Val:lowpt  
-		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5) #set 0
 		process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0., 0., 0., 0., 0., 0.)
-		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0., 0., 0., 0., 0., 0.)
+		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 2.0, 2.0, 0., 0., 0., 0., 0., 0.) #set 2.0 for later, first 18220 data sample set 0
+		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.0, 2.0, 0., 0., 0., 0., 0., 0.)
 		process.Dfinder.Dchannel = cms.vint32(0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
 		process.p = cms.Path(process.DfinderSequence)
 

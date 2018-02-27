@@ -16,8 +16,8 @@ ivars = VarParsing.VarParsing('analysis')
 
 #ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/promptD_pt4to10_pp.root'
 #ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/pp_data_n29106.root'
-#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_phikkpi_AOD_n128.root'
-ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_step12_Reco_phikkpi.root'
+ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_phikkpi_AOD_n128.root'
+#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_step12_Reco_phikkpi.root'
 
 
 
