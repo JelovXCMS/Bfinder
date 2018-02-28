@@ -274,9 +274,11 @@ class DntupleBranches
   float   DRestrk3thetastar_uf[MAX_XB];
   float   DRestrk4thetastar_uf[MAX_XB];
   //DInfo.genInfo
-  float   Dgen[MAX_XB];
+  int     Dgen[MAX_XB];
+  int     DsGen[MAX_XB];
   int     DgennDa[MAX_XB];
   int     DgenIndex[MAX_XB];
+  float   DgenMass[MAX_XB];
   float   Dgenpt[MAX_XB];
   float   Dgeneta[MAX_XB];
   float   Dgenphi[MAX_XB];
@@ -291,6 +293,8 @@ class DntupleBranches
   float   DgendecayvtxY[MAX_XB];
   float   DgendecayvtxZ[MAX_XB];
   int     DgenfromgenPV[MAX_XB];
+
+  //#later add Dgen Channel?
 
   //# later ,modify and add Dgen with from Ds three tracks decay ( but not correct mass match)
  
@@ -586,9 +590,11 @@ class DntupleBranches
           }
       }
     //DInfo.genInfo
-    dnt->Branch("Dgen",Dgen,"Dgen[Dsize]/F");
+    dnt->Branch("Dgen",Dgen,"Dgen[Dsize]/I");
+    dnt->Branch("DsGen",DsGen,"DsGen[Dsize]/I");
     dnt->Branch("DgenIndex",DgenIndex,"DgenIndex[Dsize]/I");
     dnt->Branch("DgennDa",DgennDa,"DgennDa[Dsize]/I");
+    dnt->Branch("DgenMass",DgenMass,"DgenMass[Dsize]/F");
     dnt->Branch("Dgenpt",Dgenpt,"Dgenpt[Dsize]/F");
     dnt->Branch("Dgeneta",Dgeneta,"Dgeneta[Dsize]/F");
     dnt->Branch("Dgenphi",Dgenphi,"Dgenphi[Dsize]/F");
@@ -617,6 +623,7 @@ class DntupleBranches
   int     GpdgId[MAX_GEN];
   int     GcollisionId[MAX_GEN];
   int     GisSignal[MAX_GEN];
+  int     GSignalType[MAX_GEN];
   float   GprodvtxX[MAX_GEN];//gen production vertex
   float   GprodvtxY[MAX_GEN];
   float   GprodvtxZ[MAX_GEN];
@@ -640,6 +647,7 @@ class DntupleBranches
   float   Gtk3eta[MAX_GEN];
   float   Gtk3y[MAX_GEN];
   float   Gtk3phi[MAX_GEN];
+  int     Gtk3pdgId[MAX_GEN];
   float   Gtk4pt[MAX_GEN];
   float   Gtk4eta[MAX_GEN];
   float   Gtk4y[MAX_GEN];
@@ -676,6 +684,7 @@ class DntupleBranches
     nt->Branch("GpdgId",GpdgId,"GpdgId[Gsize]/I");
     nt->Branch("GcollisionId",GcollisionId,"GcollisionId[Gsize]/I");
     nt->Branch("GisSignal",GisSignal,"GisSignal[Gsize]/I");
+    nt->Branch("GSignalType",GSignalType,"GSignalType[Gsize]/I");
     nt->Branch("GBAncestorpt",GBAncestorpt,"GBAncestorpt[Gsize]/F");
     nt->Branch("GBAncestorpdgId",GBAncestorpdgId,"GBAncestorpdgId[Gsize]/I");
     nt->Branch("GfromgenPV",GfromgenPV,"GfromgenPV[Gsize]/I");
@@ -701,6 +710,7 @@ class DntupleBranches
     nt->Branch("Gtk3eta",Gtk3eta,"Gtk3eta[Gsize]/F");
     nt->Branch("Gtk3y",Gtk3y,"Gtk3y[Gsize]/F");
     nt->Branch("Gtk3phi",Gtk3phi,"Gtk3phi[Gsize]/F");
+    nt->Branch("Gtk3pdgId",Gtk3pdgId,"Gtk3pdgId[Gsize]/I");
     nt->Branch("Gtk4pt",Gtk4pt,"Gtk4pt[Gsize]/F");
     nt->Branch("Gtk4eta",Gtk4eta,"Gtk4eta[Gsize]/F");
     nt->Branch("Gtk4y",Gtk4y,"Gtk4y[Gsize]/F");
@@ -845,6 +855,7 @@ class DntupleBranches
               }
           }
         GisSignal[gsize] = sigtype;
+        GSignalType[gsize] = CheckDsSignalType(j, GenInfo);
         GBAncestorpt[gsize] = -99.;
         GBAncestorpdgId[gsize] = 0;
         BAncestorindex = findBAncestor(j, GenInfo);
@@ -869,6 +880,7 @@ class DntupleBranches
         Gtk3pt[gsize] = -1;
         Gtk3eta[gsize] = -20;
         Gtk3phi[gsize] = -20;
+        Gtk3pdgId[gsize] = 0.;
         Gtk3y[gsize] = -1;
         Gtk4pt[gsize] = -1;
         Gtk4eta[gsize] = -20;
@@ -900,11 +912,13 @@ class DntupleBranches
             Gtk1pt[gsize] = GenInfo->pt[GenInfo->da1[j]];
             Gtk1eta[gsize] = GenInfo->eta[GenInfo->da1[j]];
             Gtk1phi[gsize] = GenInfo->phi[GenInfo->da1[j]];
+            Gtk1pdgId[gsize] = GenInfo->pdgId[GenInfo->da1[j]];
             bGen->SetPtEtaPhiM(GenInfo->pt[GenInfo->da1[j]],GenInfo->eta[GenInfo->da1[j]],GenInfo->phi[GenInfo->da1[j]],GenInfo->mass[GenInfo->da1[j]]);
             Gtk1y[gsize] = bGen->Rapidity();
             Gtk2pt[gsize] = GenInfo->pt[GenInfo->da2[j]];
             Gtk2eta[gsize] = GenInfo->eta[GenInfo->da2[j]];
             Gtk2phi[gsize] = GenInfo->phi[GenInfo->da2[j]];
+            Gtk2pdgId[gsize] = GenInfo->pdgId[GenInfo->da2[j]];
             bGen->SetPtEtaPhiM(GenInfo->pt[GenInfo->da2[j]],GenInfo->eta[GenInfo->da2[j]],GenInfo->phi[GenInfo->da2[j]],GenInfo->mass[GenInfo->da2[j]]);
             Gtk2y[gsize] = bGen->Rapidity();
             if(GisSignal[gsize]==3||GisSignal[gsize]==4||GisSignal[gsize]==5||GisSignal[gsize]==6)
@@ -912,6 +926,7 @@ class DntupleBranches
                 Gtk3pt[gsize] = GenInfo->pt[GenInfo->da3[j]];
                 Gtk3eta[gsize] = GenInfo->eta[GenInfo->da3[j]];
                 Gtk3phi[gsize] = GenInfo->phi[GenInfo->da3[j]];
+                Gtk3pdgId[gsize] = GenInfo->pdgId[GenInfo->da3[j]];
                 bGen->SetPtEtaPhiM(GenInfo->pt[GenInfo->da3[j]],GenInfo->eta[GenInfo->da3[j]],GenInfo->phi[GenInfo->da3[j]],GenInfo->mass[GenInfo->da3[j]]);
                 Gtk3y[gsize] = bGen->Rapidity();
                 if(GisSignal[gsize]==5||GisSignal[gsize]==6)
@@ -924,19 +939,19 @@ class DntupleBranches
                   }
               }
           }
-        if(GisSignal[gsize]==7||GisSignal[gsize]==8||GisSignal[gsize]==9||GisSignal[gsize]==10||GisSignal[gsize]==11||GisSignal[gsize]==12||GisSignal[gsize]==13||GisSignal[gsize]==14)
+        if(GisSignal[gsize]==7||GisSignal[gsize]==8||GisSignal[gsize]==9||GisSignal[gsize]==10||GisSignal[gsize]==11||GisSignal[gsize]==12||GisSignal[gsize]==13||GisSignal[gsize]==14|| GSignalType[gsize]>=1 )
           {
             GdecayvtxX[gsize] = GenInfo->vtxX[GenInfo->da1[j]];
             GdecayvtxY[gsize] = GenInfo->vtxY[GenInfo->da1[j]];
             GdecayvtxZ[gsize] = GenInfo->vtxZ[GenInfo->da1[j]];
-            Gtk1pt[gsize] = GenInfo->pt[GenInfo->da2[j]];
-            Gtk1eta[gsize] = GenInfo->eta[GenInfo->da2[j]];
-            Gtk1phi[gsize] = GenInfo->phi[GenInfo->da2[j]];
-            Gtk1pdgId[gsize] = GenInfo->pdgId[GenInfo->da2[j]]; 
-            Gtk2pt[gsize] = GenInfo->pt[GenInfo->da1[j]]; // add resonance particle info into tree as tk2 (note different than default order resonance should be first daughter , only test for channel 7&8//
-            Gtk2eta[gsize] = GenInfo->eta[GenInfo->da1[j]];
-            Gtk2phi[gsize] = GenInfo->phi[GenInfo->da1[j]];
-            Gtk2pdgId[gsize] = GenInfo->pdgId[GenInfo->da1[j]];
+            Gtk1pt[gsize] = GenInfo->pt[GenInfo->da1[j]];
+            Gtk1eta[gsize] = GenInfo->eta[GenInfo->da1[j]];
+            Gtk1phi[gsize] = GenInfo->phi[GenInfo->da1[j]];
+            Gtk1pdgId[gsize] = GenInfo->pdgId[GenInfo->da1[j]]; 
+            Gtk2pt[gsize] = GenInfo->pt[GenInfo->da2[j]]; // add resonance particle info into tree as tk2 (note different than default order resonance should be first daughter , only test for channel 7&8 tk1 is tktkRes particle//
+            Gtk2eta[gsize] = GenInfo->eta[GenInfo->da2[j]];
+            Gtk2phi[gsize] = GenInfo->phi[GenInfo->da2[j]];
+            Gtk2pdgId[gsize] = GenInfo->pdgId[GenInfo->da2[j]];
             bGen->SetPtEtaPhiM(GenInfo->pt[GenInfo->da2[j]],GenInfo->eta[GenInfo->da2[j]],GenInfo->phi[GenInfo->da2[j]],GenInfo->mass[GenInfo->da2[j]]);
             Gtk1y[gsize] = bGen->Rapidity();
             GRestk1pt[gsize] = GenInfo->pt[GenInfo->da1[GenInfo->da1[j]]];
@@ -1799,9 +1814,11 @@ class DntupleBranches
     if(DInfo->type[j]==7||DInfo->type[j]==8) RpdgId=PHI_PDGID;
     else if(DInfo->type[j]==9||DInfo->type[j]==10||DInfo->type[j]==11||DInfo->type[j]==12||DInfo->type[j]==13||DInfo->type[j]==14) RpdgId=DZERO_PDGID;
     Dgen[typesize] = 0;//gen init
+    DsGen[typesize] = 0;//gen init
     DgenIndex[typesize] = -1;
     DgennDa[typesize] = -1;
     Dgenpt[typesize] = -1;
+    DgenMass[typesize] = -1;
     Dgeneta[typesize] = -20;
     Dgenphi[typesize] = -20;
     Dgeny[typesize] = -1;
@@ -2113,10 +2130,104 @@ class DntupleBranches
                   }
               }
           }
-       
+      
+        // additional Match for Ds study DsGen //for tktkcombine fast rftk1,2 are from ressonance ,rftk3 is alone 
+        if(DInfo->type[j]==7||DInfo->type[j]==8)
+        {
+          if(DInfo->rftk1_index[j]>-1 && DInfo->rftk2_index[j]>-1 && DInfo->rftk3_index[j]>-1)
+          {
+            if(TrackInfo->geninfo_index[DInfo->rftk1_index[j]]>-1 &&
+               TrackInfo->geninfo_index[DInfo->rftk2_index[j]]>-1 &&
+               TrackInfo->geninfo_index[DInfo->rftk3_index[j]]>-1)
+            {
+              if(GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]>-1 &&
+                 GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]>-1 &&
+                 GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]>-1)
+              {
+                if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]]) == DpdgId && 
+                   GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]] &&
+                   GenInfo->mo1[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]) // should be no problem of index mo1-mo1 == -1
+                { 
+                   if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]]) == PHI_PDGID && 
+                      TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]) == PION_PDGID ) 
+                   { 
+                     DsGen[typesize]=23333;                                         
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]];
+                    }
+                   else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]]) == F0980_PDGID && 
+                           TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]) == PION_PDGID ) { DsGen[typesize]=24433;
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]];
+                    }
+                   else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]]) == KSTAR_PDGID &&
+                           TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]) == KAON_PDGID ) { DsGen[typesize]=25544;
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]];
+                    } // the mass hypo for this is wrong when reco (should be kpi instead of kk)
+                } // end if for correct pair reco-gen
+                else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]]) == DpdgId &&
+                   GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]] &&
+                   GenInfo->mo1[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]) // wrong pair res combinationa 1
+                {
+                   if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]]) == PHI_PDGID &&
+                      TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]) == PION_PDGID ) { DsGen[typesize]=23344;
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]];
+                     }
+                   else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]]) == F0980_PDGID &&
+                           TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]) == PION_PDGID ) { DsGen[typesize]=24444;
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]];
+                     }
+                   else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]]) == KSTAR_PDGID &&
+                           TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]) == KAON_PDGID ) { DsGen[typesize]=25555;
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]];
+                     }
+                }
+                else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]]) == DpdgId &&
+                   GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]] &&
+                   GenInfo->mo1[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]) // wrong pair res combinationa 2
+                {
+                   if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]]) == PHI_PDGID &&
+                      TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]) == PION_PDGID ) { DsGen[typesize]=23344;
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]];
+                    }   
+                   else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]]) == F0980_PDGID &&
+                           TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]) == PION_PDGID ) { DsGen[typesize]=24444;
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]];
+                    }
+                   else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]]) == KSTAR_PDGID &&
+                           TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]) == KAON_PDGID ) { DsGen[typesize]=25555;
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]];
+                    }
+                }
+                else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]]) == DPLUS_PDGID &&
+                        GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]] && 
+                        GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]] && 
+                        GenInfo->nDa[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]] == 3 )
+                { // D+ pipik 
+                     if( (TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]) == PION_PDGID &&   
+                          TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]) == PION_PDGID &&
+                          TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]) == KAON_PDGID ) ||
+                         (TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]) == PION_PDGID &&
+                          TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]) == KAON_PDGID &&
+                          TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]) == PION_PDGID ) ||
+                         (TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]) == KAON_PDGID &&
+                          TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]) == PION_PDGID &&
+                          TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]) == PION_PDGID ) )
+                    {
+                        DsGen[typesize]=19999;
+                        dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]];
+                    }
+                }
+
+
+              }// end of Geninfo mo1 of tk123 exist 
+            }
+          }    
+        } // end if additional Match for Ds study
+
+
+ 
 //        if(Dgen[typesize]!=23333&&Dgen[typesize]!=23344 && (DInfo->type[j]==7||DInfo->type[j]==8) ) // and general Dgen match
  
-        if(Dgen[typesize]==23333||Dgen[typesize]==23344)
+        if(Dgen[typesize]==23333||Dgen[typesize]==23344 || DsGen[typesize]>=19999)
           {
             if(dGenIdxRes<0) cout<<"ERROR: Gen-Matched D index is -1"<<endl;
             else
@@ -2124,6 +2235,7 @@ class DntupleBranches
                 DgenIndex[typesize] = dGenIdxRes;
                 if((DInfo->type[j]==1||DInfo->type[j]==2)&&GenInfo->nDa[DgenIndex[typesize]]>2) Dgen[typesize]=41000;
                 DgennDa[typesize] = GenInfo->nDa[DgenIndex[typesize]];
+                DgenMass[typesize] = GenInfo->mass[DgenIndex[typesize]];
                 Dgenpt[typesize] = GenInfo->pt[DgenIndex[typesize]];
                 Dgeneta[typesize] = GenInfo->eta[DgenIndex[typesize]];
                 Dgenphi[typesize] = GenInfo->phi[DgenIndex[typesize]];
@@ -2178,6 +2290,47 @@ class DntupleBranches
     return BAncestorindex;
   }
   
+  int CheckDsSignalType(int j, GenInfoBranches *GenInfo)
+  {
+        if(TMath::Abs(GenInfo->pdgId[j])==DSUBS_PDGID&&GenInfo->nDa[j]==2&&GenInfo->da1[j]!=-1&&GenInfo->da2[j]!=-1)
+          {
+            if(TMath::Abs(GenInfo->pdgId[GenInfo->da1[j]])==PHI_PDGID)
+              {
+                if(GenInfo->nDa[GenInfo->da1[j]]==2&&GenInfo->da1[GenInfo->da1[j]]!=-1&&GenInfo->da2[GenInfo->da1[j]]!=-1)
+                  {
+                    if(TMath::Abs(GenInfo->pdgId[GenInfo->da1[GenInfo->da1[j]]])==KAON_PDGID&&TMath::Abs(GenInfo->pdgId[GenInfo->da2[GenInfo->da1[j]]])==KAON_PDGID)
+                      {
+                        if((TMath::Abs(GenInfo->pdgId[GenInfo->da2[j]])==PION_PDGID))
+                          return 1; //Ds phikk pi
+                      }
+                  }
+              }
+            else if(TMath::Abs(GenInfo->pdgId[GenInfo->da1[j]])==F0980_PDGID)
+              {
+                if(GenInfo->nDa[GenInfo->da1[j]]==2&&GenInfo->da1[GenInfo->da1[j]]!=-1&&GenInfo->da2[GenInfo->da1[j]]!=-1)
+                  {
+                    if(TMath::Abs(GenInfo->pdgId[GenInfo->da1[GenInfo->da1[j]]])==KAON_PDGID&&TMath::Abs(GenInfo->pdgId[GenInfo->da2[GenInfo->da1[j]]])==KAON_PDGID)
+                      {
+                        if((TMath::Abs(GenInfo->pdgId[GenInfo->da2[j]])==PION_PDGID))
+                          return 2; // Ds f0980kk pi
+                      }
+                  }
+              }
+            else if(TMath::Abs(GenInfo->pdgId[GenInfo->da1[j]])==KSTAR_PDGID)
+              {
+                if(GenInfo->nDa[GenInfo->da1[j]]==2&&GenInfo->da1[GenInfo->da1[j]]!=-1&&GenInfo->da2[GenInfo->da1[j]]!=-1)
+                  {
+                    if(TMath::Abs(GenInfo->pdgId[GenInfo->da1[GenInfo->da1[j]]])==KAON_PDGID&&TMath::Abs(GenInfo->pdgId[GenInfo->da2[GenInfo->da1[j]]])==PION_PDGID)
+                      {
+                        if((TMath::Abs(GenInfo->pdgId[GenInfo->da2[j]])==KAON_PDGID))
+                          return 3; // Ds Kstar892 kpi k
+                      }
+                  }
+              }
+          }
+        return 0;
+  } // end CheckDsSignalType
+
   bool isDsignalGen(int dmesontype, int j, GenInfoBranches *GenInfo)
   {
     bool flag=false;

@@ -8,3 +8,7 @@ g++ loop.C $(root-config --cflags --libs) -Wall -O2 -o loop.exe
 
 need to add centrality trigger info and other hlt info into selected tree in loop.h
 
+
+Don't touch / modify loop.C or related file while PBS jobs sumitted and wait in queue, 
+the job use the file when submitted 
+

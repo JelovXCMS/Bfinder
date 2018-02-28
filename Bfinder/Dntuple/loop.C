@@ -10,17 +10,23 @@ int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb
 {
   if(istest)
     {
-      infile="/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Dsfinder_pp_mc_detail_phikkpi_n128.root";
+  //    infile="/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Dsfinder_pp_mc_detail_phikkpi_n128.root";
+      infile="/mnt/hadoop/store/user/chengchi/Dsfinder_f0980kkpi_18220/pp_MC/Ds_f0980kkpi_pp/MC_pp_Ds_f0980kkpi_pt4/180225_150245/0000/Dsfinder_pp_mc_1.root";
+  //    infile="/mnt/hadoop/store/user/chengchi/Ds_phikkpi_18220/pp_MC/Ds_phikkpi_pp/MC_pp_Ds_phikkpi_pt4/180225_003140/0000/finder_pp_mc_1.root";
       outfile="test.root";
       REAL=false;
       isPbPb=false;
       skim=false;
       checkMatching=true;
       iseos=false;
+
+			cout<<"in test mode"<<endl;
+
     }
   cout<<endl;
   if(REAL) cout<<"--- Processing - REAL DATA";
-  else cout<<"--- Processing - MC";
+  else {cout<<"--- Processing - MC , skim false";
+				skim=false;}
   if(isPbPb) cout<<" - PbPb";
   else cout<<" - pp";
   cout<<endl;
@@ -33,7 +39,6 @@ int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb
 //	if(FfromMnt) ifname= Form("root://xrootd.rcac.purdue.edu//store",infile.Data());
   if (!TFile::Open(ifname))   { cout << " fail to open file" << endl; return 0;}
 
-	cout<<"hello"<<endl;
   TFile* f = TFile::Open(ifname);
   TTree* root = (TTree*)f->Get("Dfinder/root");  
   TTree* hltroot = (TTree*)f->Get("hltanalysis/HltTree");
@@ -147,6 +152,10 @@ int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb
   cout<<ifname<<endl;
   cout<<outfile<<endl;
   cout<<endl;
+
+	if(istest){
+  cout<<"in test mode"<<endl;
+	}
 
   return 0;
 }
