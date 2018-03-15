@@ -110,6 +110,7 @@ class Dfinder : public edm::EDAnalyzer
         std::vector<double> tktkRes_alphaToSVCut_;
         std::vector<double> ResToNonRes_PtAsym_min_;
         std::vector<double> ResToNonRes_PtAsym_max_;
+        double tktkRes_masswindowCut_ =0.0 ;
         bool RunOnMC_;
         bool doTkPreCut_;
         bool makeDntuple_;
@@ -241,6 +242,8 @@ Dfinder::Dfinder(const edm::ParameterSet& iConfig):theConfig(iConfig)
     Dedx_Token1_ = consumes<edm::ValueMap<reco::DeDxData> >(iConfig.getParameter<edm::InputTag>("Dedx_Token1"));
     Dedx_Token2_ = consumes<edm::ValueMap<reco::DeDxData> >(iConfig.getParameter<edm::InputTag>("Dedx_Token2"));
 
+    if (iConfig.exists("tktkRes_masswindowCut")) { tktkRes_masswindowCut_ = iConfig.getParameter<double>("tktkRes_masswindowCut"); }
+    
     //Special TMVA reader for 3 tracks channels
     doTmvaCut_ = iConfig.getParameter<bool>("doTmvaCut");
     if(doTmvaCut_){
@@ -708,15 +711,20 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                     std::pair<float, int> tk1 = std::make_pair(KAON_MASS, 1);
                     std::pair<float, int> tk2 = std::make_pair(-KAON_MASS, 1);
                     std::pair<float, int> tk3 = std::make_pair(PION_MASS, 0);
+                    //std::pair<float, int> tk1 = std::make_pair(-PION_MASS, 1);
+                    //std::pair<float, int> tk2 = std::make_pair(PION_MASS, 1);
+                    //std::pair<float, int> tk3 = std::make_pair(PION_MASS, 0);
                     InVec.push_back(tk1);
                     InVec.push_back(tk2);
                     InVec.push_back(tk3);
                     PermuVec = GetPermu(InVec);
                     PermuVec = DelDuplicate(PermuVec);
+                    double Phi_masswindows=0.1;
+                    if(tktkRes_masswindowCut_>0.0001 && tktkRes_masswindowCut_<2 ) { Phi_masswindows=tktkRes_masswindowCut_;}
                     //for(unsigned int i = 0; i < PermuVec.size(); i++){
                     //    Dfinder::BranchOutNTk( DInfo, input_tracks, thePrimaryV, isNeededTrackIdx, D_counter, dsubs_mass_window, PermuVec[i], PHI_MASS, 0.1, false, false, 7, 0);
                     //}
-                    Dfinder::BranchOutNTk( DInfo, input_tracks, thePrimaryV, isNeededTrackIdx, D_counter, dsubs_mass_window, InVec, PHI_MASS, 0.1, false, false, 7, 1);
+                    Dfinder::BranchOutNTk( DInfo, input_tracks, thePrimaryV, isNeededTrackIdx, D_counter, dsubs_mass_window, InVec, PHI_MASS, Phi_masswindows , false, false, 7, 1);
                 }
                 //////////////////////////////////////////////////////////////////////////
                 // RECONSTRUCTION: K+K-(Phi)pi-
@@ -724,18 +732,23 @@ void Dfinder::analyze(const edm::Event& iEvent, const edm::EventSetup& iSetup)
                 if(Dchannel_[7] == 1){
                     std::vector< std::vector< std::pair<float, int> > > PermuVec;
                     std::vector< std::pair<float, int> > InVec;
-                    std::pair<float, int> tk1 = std::make_pair(KAON_MASS, 1);
-                    std::pair<float, int> tk2 = std::make_pair(-KAON_MASS, 1);
+                    std::pair<float, int> tk1 = std::make_pair(-KAON_MASS, 1); // original is k+,k- pi- , true for pp, HIMB567, changed to k-k+pi- to have same order of charge relation with another Ds channel
+                    std::pair<float, int> tk2 = std::make_pair(KAON_MASS, 1);
                     std::pair<float, int> tk3 = std::make_pair(-PION_MASS, 0);
+                    // std::pair<float, int> tk1 = std::make_pair(PION_MASS, 1);
+                    // std::pair<float, int> tk2 = std::make_pair(-PION_MASS, 1);
+                    // std::pair<float, int> tk3 = std::make_pair(-PION_MASS, 0);
                     InVec.push_back(tk1);
                     InVec.push_back(tk2);
                     InVec.push_back(tk3);
                     PermuVec = GetPermu(InVec);
                     PermuVec = DelDuplicate(PermuVec);
+                    double Phi_masswindows=0.1;
+                    if(tktkRes_masswindowCut_>0.0001 && tktkRes_masswindowCut_<2) { Phi_masswindows=tktkRes_masswindowCut_;}
                     //for(unsigned int i = 0; i < PermuVec.size(); i++){
                     //    Dfinder::BranchOutNTk( DInfo, input_tracks, thePrimaryV, isNeededTrackIdx, D_counter, dsubs_mass_window, PermuVec[i], PHI_MASS, 0.1, false, false, 8, 0);
                     //}
-                    Dfinder::BranchOutNTk( DInfo, input_tracks, thePrimaryV, isNeededTrackIdx, D_counter, dsubs_mass_window, InVec, PHI_MASS, 0.1, false, false, 8, 1);
+                    Dfinder::BranchOutNTk( DInfo, input_tracks, thePrimaryV, isNeededTrackIdx, D_counter, dsubs_mass_window, InVec, PHI_MASS, Phi_masswindows, false, false, 8, 1);
                 }
                 //////////////////////////////////////////////////////////////////////////
                 // RECONSTRUCTION: D0(K-pi+)pi+

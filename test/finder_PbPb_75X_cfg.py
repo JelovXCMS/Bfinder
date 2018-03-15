@@ -3,7 +3,7 @@ process = cms.Process('HiForest')
 
 runOnMC = False
 ### Set maxEvents
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(2000))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(200))
 
 ##process.SimpleMemoryCheck = cms.Service("SimpleMemoryCheck",
 ##    ignoreTotal = cms.untracked.int32(1),
@@ -32,7 +32,8 @@ ivars = VarParsing.VarParsing('analysis')
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias2/AOD/PromptReco-v1/000/263/757/00001/FCC156B2-F0BA-E511-95B6-02163E0146FF.root'#HIMinimumBias2
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias3/AOD/PromptReco-v1/000/263/233/00000/048B4DED-38A7-E511-8C73-02163E01183A.root'#HIMinimumBias3
 #ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias3/AOD/PromptReco-v1/000/263/757/00001/FA43C598-BCBA-E511-BAA9-02163E0119F8.root'#HIMinimumBias3
-ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/PbPb_HiMB5_n10952.root'
+#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/PbPb_HiMB5_n10952.root'
+ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_PbPb_MC_phikkpi_step2_Reco.root'
 
 ivars.outputFile='Dsfinder_PbPb.root'
 if runOnMC:
@@ -51,9 +52,6 @@ PbPbDMBdefault = 0
 PbPbBD0PiHP = 0
 PbPbBD0PiMB = 0
 optSum = PbPbDs + PbPbBdefault + PbPbBs + PbPbDHPdefault + PbPbDMBdefault + PbPbBD0PiHP + PbPbBD0PiMB 
-
-### Run on MC?
-runOnMC = False
 
 ### Use AOD event filter
 RunOnAOD = True
@@ -117,6 +115,20 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 #process.load("Configuration.Geometry.GeometryIdeal_cff")
 #process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
 
+#overwrite GT for centrality table for Cymbal5Ev8 tune
+if runOnMC:
+		process.GlobalTag.snapshotTime = cms.string("9999-12-31 23:59:59.000")
+		process.GlobalTag.toGet.extend([
+   		cms.PSet(record = cms.string("HeavyIonRcd"),
+      		tag = cms.string("CentralityTable_HFtowers200_HydjetCymbal5Ev8_v758x01_mc"),
+      		connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS"),
+      		label = cms.untracked.string("HFtowersHydjetCymbal5Ev8")
+   		),
+		])
+
+
+
+
 #####refit PV with HI vertex fitter###
 process.load('RecoHI.HiTracking.HIPixelAdaptiveVertex_cfi')
 process.hiOfflinePrimaryVertices = process.hiPixelAdaptiveVertex.clone(TrackLabel = cms.InputTag("hiGeneralTracks"))
@@ -170,8 +182,12 @@ process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
 if not runOnMC:
 	process.centralityBin.Centrality = cms.InputTag("hiCentrality")
 	process.centralityBin.centralityVariable = cms.string("HFtowers")
+if runOnMC:
+	process.centralityBin.Centrality = cms.InputTag("hiCentrality")
+	process.centralityBin.centralityVariable = cms.string("HFtowers")
+	process.centralityBin.nonDefaultGlauberModel = cms.string("HydjetCymbal5Ev8")
 process.centrality_path = cms.Path(process.centralityBin)
-
+#process.centralityBin.nonDefaultGlauberModel = cms.string("HydjetDrum5")
 ### Run the hiEvtAnalyzer sequence
 process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi')
 process.evtAna = cms.Path(process.hiEvtAnalyzer)
@@ -310,18 +326,19 @@ if PbPbDs and optSum is 1:
 		process.Dfinder.printInfo = cms.bool(False)
 		process.Dfinder.tkPtCut = cms.double(1.0)#before fit
 		process.Dfinder.tkEtaCut = cms.double(1.5)
-		process.Dfinder.dPtCut = cms.vdouble(2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0)#before fit //# need to increase to reduce file size , set 3 or more based on 30-100 result
+		process.Dfinder.dPtCut = cms.vdouble(3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0)#before fit //# need to increase to reduce file size , set 3 or more based on 30-100 result
 		process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.)
-		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-		process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+#		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+#		process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+		process.Dfinder.tktkRes_masswindowCut = cms.double(0.04) ## 0.1 default
 		process.Dfinder.Dchannel = cms.vint32(0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
 		process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
 		process.Dfinder.dRapidityCut = cms.vdouble(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1)
 		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
 		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-		process.p = cms.Path(process.DfinderSequence)
-#    process.p = cms.Path(process.hiOfflinePrimaryVertices * process.hiBestOfflinePrimaryVertex * process.DfinderSequence)
+#		process.p = cms.Path(process.DfinderSequence)
+		process.p = cms.Path(process.hiOfflinePrimaryVertices * process.hiBestOfflinePrimaryVertex * process.DfinderSequence) ## pbpb30 do not turned on this, need to rerun for PVReFit
 if PbPbDHPdefault and optSum is 1:
     process.Dfinder.tkPtCut = cms.double(2.5)#before fit
     process.Dfinder.dPtCut = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)#before fit

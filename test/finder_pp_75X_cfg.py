@@ -1,7 +1,7 @@
 import FWCore.ParameterSet.Config as cms
 process = cms.Process('HiForest')
 
-runOnMC = True
+runOnMC = False
 
 ### Set maxEvents
 process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(-1))
@@ -15,8 +15,8 @@ ivars = VarParsing.VarParsing('analysis')
 #ivars.inputFiles='file:/data/twang/Data_samples/Run2015E/MinimumBias1/AOD/PromptReco-v1/000/262/274/00000/0E443E25-3C9A-E511-9263-02163E013626.root'#AOD MB1
 
 #ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/promptD_pt4to10_pp.root'
-#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/pp_data_n29106.root'
-ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_phikkpi_AOD_n128.root'
+ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/pp_data_n29106.root'
+#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_phikkpi_AOD_n128.root'
 #ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_step12_Reco_phikkpi.root'
 
 
@@ -265,17 +265,18 @@ if (ppBdefault or ppBs) and optSum is 1:
 if ppDs and optSum is 1:
 		process.Dfinder.makeDntuple = cms.bool(True)
 		process.Dfinder.printInfo = cms.bool(False)
-		process.Dfinder.tkEtaCut = cms.double(2.0)
-		process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
-		process.Dfinder.dRapidityCut = cms.vdouble(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1)
-		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0)
+		#process.Dfinder.tktkRes_masswindowCut = cms.double(0.05) ## 0.1 default
 		process.Dfinder.tkPtCut = cms.double(0.7)#before fit
-		process.Dfinder.dPtCut = cms.vdouble(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 2.0, 2.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)#before fit , 18220 data set 1
-		process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.) # <Val:lowpt  
-		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5) #set 0
-		process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 2.0, 2.0, 0., 0., 0., 0., 0., 0.) #set 2.0 for later, first 18220 data sample set 0
-		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.0, 2.0, 0., 0., 0., 0., 0., 0.)
+		process.Dfinder.tkEtaCut = cms.double(2.0)
+		process.Dfinder.dPtCut = cms.vdouble(2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.8, 1.8, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0)#before fit , 18220 data set 1
+		process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.25, 0.25, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
+		process.Dfinder.dRapidityCut = cms.vdouble(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1)
+		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.02, 0.02, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0)
+		process.Dfinder.dCutSeparating_PtVal = cms.vdouble(4., 4., 4., 4., 4., 4., 4., 4., 4., 4., 4., 4., 4., 4.) # <Val:lowpt  
+#		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5) #set 0
+#		process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 1.5, 1.5, 0., 0., 0., 0., 0., 0.) #set 2.0 for later, first 18220 data sample set 0
+		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 1.5, 1.5, 0., 0., 0., 0., 0., 0.)
 		process.Dfinder.Dchannel = cms.vint32(0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
 		process.p = cms.Path(process.DfinderSequence)
 

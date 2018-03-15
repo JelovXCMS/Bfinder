@@ -18,12 +18,14 @@ config.General.transferLogs = False
 
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = '../finder_PbPb_75X_cfg.py'
+config.JobType.maxMemoryMB = 3500  ## avoid Memory issue
+
 
 config.Data.inputDataset = '/HIMinimumBias${mbN}/HIRun2015-PromptReco-v1/AOD'
 config.Data.inputDBS ='global'
 config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 2  ## 2 will give about 3700 jobs, tested work
-config.Data.outLFNDirBase = '/store/user/%s/Dsfinder_phikkpi_18220/PbPb_data/cent30100/' % (getUsernameFromSiteDB())
+config.Data.outLFNDirBase = '/store/user/%s/Dsfinder_phikkpi_180305/PbPb_data/cent30100/' % (getUsernameFromSiteDB())
 #config.Data.publication = True
 config.Data.outputDatasetTag = 'Data_PbPb_Ds_phikkpi_HiMB${mbN}'
 

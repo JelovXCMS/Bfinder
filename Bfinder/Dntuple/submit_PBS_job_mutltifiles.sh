@@ -21,8 +21,8 @@ echo "$Njobs jobs will be submitted"
 cd /home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/working_DsFinder/CMSSW_7_5_8_patch3/src/Bfinder/Bfinder/Dntuple
 
 
-rm loop.exe
-g++ loop.C $(root-config --cflags --libs) -Wall -O2 -o loop.exe
+#rm loop.exe
+#g++ loop.C $(root-config --cflags --libs) -Wall -O2 -o loop.exe
 
 ## put other needed exe here
 

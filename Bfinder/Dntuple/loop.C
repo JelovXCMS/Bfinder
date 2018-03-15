@@ -29,7 +29,7 @@ int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb
 				skim=false;}
   if(isPbPb) cout<<" - PbPb";
   else cout<<" - pp";
-  cout<<endl;
+  cout<<"skim = "<<skim<<endl;
 
 //	root://xrootd.rcac.purdue.edu//store
 

@@ -12,6 +12,7 @@ test/test_finder_pp_75X_cfg.py
 test/crab_jobs_MC/crab_projects/*
 test/crab_jobs/crab_projects/*
 test/crab_jobs_MC/crab_projects/*
+test/crab_jobs_MC_PbPb/crab_projects/*
 Bfinder/Dntuple/pbs_fromRui
 
 Bfinder/Dntuple/PBS_jobs/PBS_job_log
