@@ -5,8 +5,28 @@ check runOnMC, Ds cut before run.
 
 running note:
 
+## note on 18.May.09, current 0-100 sample done by wei and Jian is using the following parameter:
+if PbPbDs and optSum is 1:
+    process.Dfinder.makeDntuple = cms.bool(False)
+    process.Dfinder.printInfo = cms.bool(False)
+    process.Dfinder.tkPtCut = cms.double(1.0)#before fit
+    process.Dfinder.tkEtaCut = cms.double(1.5)
+    process.Dfinder.dPtCut = cms.vdouble(3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0)#before fit //# need to increase to reduce file size , set 3 or more based on 30-100 result
+    process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.)
+    process.Dfinder.tktkRes_masswindowCut = cms.double(0.04) ## 0.1 default
+    process.Dfinder.Dchannel = cms.vint32(0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
+    process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
+    process.Dfinder.dRapidityCut = cms.vdouble(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1)
+    process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    process.p = cms.Path(process.hiOfflinePrimaryVertices * process.hiBestOfflinePrimaryVertex * process.DfinderSequence) ## pbpb30 do not turned on this, need to rerun for PVReFit
 
-## 180311 pp by Rui
+
+
+
+
+## 180311 pp by Rui & myself , file 318 in MB12 broken for about 1000 events.
 
     process.Dfinder.makeDntuple = cms.bool(True)
     process.Dfinder.printInfo = cms.bool(False)

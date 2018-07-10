@@ -5,20 +5,25 @@
 	ptname=$3
 	pPb=$4
 
+	Date=`date '+%m%d%H'`
+
+echo Date = ${Date}
 echo filename = crab_${pPb}_MC_${PNP}_${Channel}_${ptname}.py 
 echo dataset is empty, need to fill by hand!!!
-cat > crab_${pPb}_MC_${PNP}_${Channel}_${ptname}.py <<EOF
+cat > crab_${pPb}_MC_${PNP}_${Channel}_${ptname}_${Date}.py <<EOF
 
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = config()
 
-config.General.requestName = 'Dfinder_MC_${pPb}_Ds_${PNP}_${Channel}_${ptname}'
+config.General.requestName = 'Dfinder_MC_${pPb}_Ds_${PNP}_${Channel}_${ptname}_${Date}'
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
 config.General.transferLogs = False
 
 config.JobType.pluginName = 'Analysis'
-config.JobType.psetName = '../finder_pp_75X_cfg.py'
+config.JobType.psetName = '../finder_pp_75X_mc_cfg.py'
+#config.JobType.maxMemoryMB = 3500  ## some job failed in deafult 2000 (MB)
+
 
 config.Data.inputDataset = '' #need to be filled by hand
 config.Data.inputDBS ='phys03'
@@ -26,7 +31,7 @@ config.Data.splitting = 'FileBased'
 config.Data.unitsPerJob = 10
 config.Data.outLFNDirBase = '/store/user/%s/Dsfinder_18227/pp_MC/' % (getUsernameFromSiteDB())
 #config.Data.publication = True
-config.Data.outputDatasetTag = 'Dfinder_MC_${pPb}_Ds_${PNP}_${Channel}_${ptname}'
+config.Data.outputDatasetTag = 'Dfinder_MC_${pPb}_Ds_${PNP}_${Channel}_${ptname}_${Date}'
 #config.JobType.outputFiles = ['Dsfinder_pp.root']
 
 
@@ -34,10 +39,11 @@ config.Data.outputDatasetTag = 'Dfinder_MC_${pPb}_Ds_${PNP}_${Channel}_${ptname}
 
 #config.JobType.inputFiles=['JPcalib_MC75X_ppqcd50.db']
 #config.JobType.inputFiles=['fout_qcd.root','fout_bjt.root']
-
+config.Site.whitelist = ['T2_US_*']
+config.Site.blacklist = ['T2_US_Florida']
 config.Site.storageSite = 'T2_US_Purdue'  # or T2_CH_CERN
 
-config.section_("Debug")
-config.Debug.extraJDL = ['+CMS_ALLOW_OVERFLOW=False']
+#config.section_("Debug")
+#config.Debug.extraJDL = ['+CMS_ALLOW_OVERFLOW=False']
 
 EOF

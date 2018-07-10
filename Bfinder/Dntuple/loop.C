@@ -6,15 +6,17 @@ using namespace std;
 
 Bool_t istest = false;
 bool fillZeroCandEvt = true;
-int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb=true, Int_t startEntries=0, Int_t endEntries=-1, Bool_t skim=true, Bool_t gskim=true, Bool_t checkMatching=true, Bool_t iseos=false, Bool_t SkimHLTtree=false)
+int loop(TString infile="", TString outfile="", Bool_t REAL=false, Bool_t isPbPb=true, Int_t startEntries=0, Int_t endEntries=-1, Bool_t skim=false, Bool_t gskim=true, Bool_t checkMatching=true, Bool_t iseos=false, Bool_t SkimHLTtree=false)
 {
   if(istest)
     {
   //    infile="/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Dsfinder_pp_mc_detail_phikkpi_n128.root";
-      infile="/mnt/hadoop/store/user/chengchi/Dsfinder_f0980kkpi_18220/pp_MC/Ds_f0980kkpi_pp/MC_pp_Ds_f0980kkpi_pt4/180225_150245/0000/Dsfinder_pp_mc_1.root";
+      // infile="/mnt/hadoop/store/user/chengchi/Dsfinder_f0980kkpi_18220/pp_MC/Ds_f0980kkpi_pp/MC_pp_Ds_f0980kkpi_pt4/180225_150245/0000/Dsfinder_pp_mc_1.root";
+      // infile="/mnt/hadoop/store/user/chengchi/Dsfinder_phikkpi_180311/pp_data/Dfinder_Data_pp_Ds_phikkpi_MB12_180312_2/180312_173623/0000/Dsfinder_pp_318.root";
+      infile="/mnt/hadoop/store/user/rxiao/Dsfinder_phikkpi_180311/pp_data/MinimumBias12/Dfinder_Data_pp_Ds_phikkpi_MB12_180312_2/180312_173623/0000/Dsfinder_pp_318.root";
   //    infile="/mnt/hadoop/store/user/chengchi/Ds_phikkpi_18220/pp_MC/Ds_phikkpi_pp/MC_pp_Ds_phikkpi_pt4/180225_003140/0000/finder_pp_mc_1.root";
-      outfile="test.root";
-      REAL=false;
+      outfile="pp_MB12_318_243.root";
+      REAL=true;
       isPbPb=false;
       skim=false;
       checkMatching=true;

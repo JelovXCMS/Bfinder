@@ -49,7 +49,7 @@ do
 cat > PBS_jobs/PBS_jobsAll/PBS_${STARTFILE}to${ENDFILE}_${JobIndex}.sh <<EOF
 #!/bin/sh
 
-#PBS -l nodes=1,walltime=04:00:00,mem=2400MB
+#PBS -l nodes=1,walltime=04:00:00,mem=4800MB,naccesspolicy=singleuser
 #PBS -N Dnt${STARTFILE}to${ENDFILE}_${JobIndex}
 #PBS -o /home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/working_DsFinder/CMSSW_7_5_8_patch3/src/Bfinder/Bfinder/Dntuple/PBS_jobs/PBS_job_log/PBS_${STARTFILE}to${ENDFILE}_${JobIndex}.log
 #PBS -e /home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/working_DsFinder/CMSSW_7_5_8_patch3/src/Bfinder/Bfinder/Dntuple/PBS_jobs/PBS_job_log/PBS_${STARTFILE}to${ENDFILE}_${JobIndex}.err

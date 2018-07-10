@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for id in {6240585..6240736}
+for id in {6330965..6330981}
 do
 
 echo qdel $id

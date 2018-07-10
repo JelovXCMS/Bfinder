@@ -18,7 +18,7 @@ config.General.transferLogs = False
 
 config.JobType.pluginName = 'Analysis'
 config.JobType.psetName = '../finder_pp_75X_cfg.py'
-config.JobType.maxMemoryMB = 3500  ## avoid Memory issue
+#config.JobType.maxMemoryMB = 3500  ## avoid Memory issue
 
 
 config.Data.inputDataset = '/MinimumBias${mbN}/Run2015E-PromptReco-v1/AOD'
@@ -36,11 +36,11 @@ config.Data.lumiMask = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/
 
 config.Site.storageSite = 'T2_US_Purdue'  # or T2_CH_CERN
 
-config.section_("Debug")
-config.Debug.extraJDL = ['+CMS_ALLOW_OVERFLOW=False']
+#config.section_("Debug")
+#config.Debug.extraJDL = ['+CMS_ALLOW_OVERFLOW=False']
 
 EOF
 
-crab submit crab_pp_data_MB${mbN}.py
+#crab submit crab_pp_data_MB${mbN}.py
 
 done 

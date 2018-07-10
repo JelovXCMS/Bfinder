@@ -5,6 +5,9 @@ ls /mnt/hadoop/store/user/chengchi/Ds_phikkpi_18220/pp_MC/Ds_phikkpi_pp/MC_pp_Ds
 
 replace /mnt/hadoop/ by  root://xrootd.rcac.purdue.edu/   to let hastead able to reach the file
 :1,$s/\/mnt\/hadoop/root:\/\/xrootd.rcac.purdue.edu\//gc
+use sed to do all in once
+sed -i 's/\/mnt\/hadoop/root:\/\/xrootd.rcac.purdue.edu\//g' *filename*
+
 
 
 replace the folderPath & filelistname_lis.txt

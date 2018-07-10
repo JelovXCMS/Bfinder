@@ -17,7 +17,14 @@ Bfinder/Dntuple/pbs_fromRui
 
 Bfinder/Dntuple/PBS_jobs/PBS_job_log
 Bfinder/Dntuple/PBS_jobs/PBS_jobsAll
-
+Bfinder/Dntuple/PBS_jobs/input_list
+test/crab_jobs_MC/*.py
+test/crab_jobs_MC_PbPb/*.py
+test/crab_jobs/*.py
+test/crab_jobs_official_MC_PbPb/*.py
+test/crab_jobs_official_MC_pp/*.py
+test/crab_jobs_official_MC_pp/crab_projects/
+test/crab_jobs_official_MC_PbPb/crab_projects/
 # plots flies
 
 *.pdf
