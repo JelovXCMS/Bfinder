@@ -1119,10 +1119,15 @@ class DntupleBranches
     Ddca[typesize] = DInfo->svpvDistance[j]*TMath::Sin(DInfo->alpha[j]);
     //# add Ddca err & Ddca significance 
 
-    float r2lxyBS = (DInfo->vtxX[j]-EvtInfo->BSx+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz) * (DInfo->vtxX[j]-EvtInfo->BSx+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz)
-      + (DInfo->vtxY[j]-EvtInfo->BSy+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz) * (DInfo->vtxY[j]-EvtInfo->BSy+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz);
-    float xlxyBS = DInfo->vtxX[j]-EvtInfo->BSx + (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz;
-    float ylxyBS = DInfo->vtxY[j]-EvtInfo->BSy + (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz;
+//    float r2lxyBS = (DInfo->vtxX[j]-EvtInfo->BSx+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz) * (DInfo->vtxX[j]-EvtInfo->BSx+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz)
+//      + (DInfo->vtxY[j]-EvtInfo->BSy+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz) * (DInfo->vtxY[j]-EvtInfo->BSy+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz);
+    float r2lxyBS = (DInfo->vtxX[j]-EvtInfo->BSx-(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz) * (DInfo->vtxX[j]-EvtInfo->BSx-(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz)
+      + (DInfo->vtxY[j]-EvtInfo->BSy-(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz) * (DInfo->vtxY[j]-EvtInfo->BSy-(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz);
+    float xlxyBS = DInfo->vtxX[j]-EvtInfo->BSx - (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz;
+    float ylxyBS = DInfo->vtxY[j]-EvtInfo->BSy - (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz;
+
+    // float xlxyBS = DInfo->vtxX[j]-EvtInfo->BSx + (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz;
+    // float ylxyBS = DInfo->vtxY[j]-EvtInfo->BSy + (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz;
     DlxyBS[typesize] = TMath::Sqrt(r2lxyBS);
     DlxyBSErr[typesize] = TMath::Sqrt ((1./r2lxyBS) * ((xlxyBS*xlxyBS)*DInfo->vtxXErr[j] + (2*xlxyBS*ylxyBS)*DInfo->vtxYXErr[j] + (ylxyBS*ylxyBS)*DInfo->vtxYErr[j]) );
     DMaxDoca[typesize] = DInfo->MaxDoca[j];
