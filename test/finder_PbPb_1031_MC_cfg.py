@@ -1,58 +1,29 @@
 import FWCore.ParameterSet.Config as cms
 process = cms.Process('HiForest')
-
-runOnMC = True
-### Set maxEvents
-process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(200))
-
-##process.SimpleMemoryCheck = cms.Service("SimpleMemoryCheck",
-##    ignoreTotal = cms.untracked.int32(1),
-##		oncePerEventMode = cms.untracked.bool(True),
-##		showMallocInfo = cms.untracked.bool(True)
-##)
-
 import FWCore.ParameterSet.VarParsing as VarParsing
 ivars = VarParsing.VarParsing('analysis')
 
-#ivars.inputFiles='file:/mnt/hadoop/cms/store/user/twang/HIDiMuon/RECO_HIDiMuon_L2DoubleMu3Skim_v10_JpsiFilter_v1_CMSSW740pre8_20150428/3c3450dda05abb66de621932774972fa/hiRecoData_RAW2DIGI_L1Reco_RECO_filter_975_1_PTa.root'
-#ivars.inputFiles='file:/mnt/hadoop/cms/store/user/twang/Pyquen_CMSSW742_Unquenched_PbPb_2760GeV_GEN_SIM_PU_BuKp_20150526_100kevt/Pyquen_CMSSW742_Unquenched_PbPb_2760GeV_step3_BuKp_20150526_100kevt/27ff3fcdfd0b68d12bfbb80768287940/step3_RAW2DIGI_L1Reco_RECO_PU_90_1_Ole.root'
-#ivars.inputFiles='file:/mnt/hadoop/cms/store/user/richard/MBHydjet5020/Hydjet_Quenched_MinBias_5020GeV/HydjetMB5020_750_75X_mcRun2_HeavyIon_v1_RealisticHICollisions2011_STARTHI50_mc_RECOSIM_v3/150729_144407/0000/step3_98.root'
-#ivars.inputFiles='file:/data/twang/MC_samples/Hydjet_Quenched_MinBias_5020GeV_750/Hydjet_Quenched_MinBias_5020GeV_750_HiFall15_step3_20151110/step3_RAW2DIGI_L1Reco_RECO_2054_1_2fm.root'
-#ivars.inputFiles='file:/data/twang/MC_samples/Pythia8_BuToJpsiK_TuneCUEP8M1_5020GeV_BPHMod_filter_GEN_SIM_PU_20151105/Pythia8_BuToJpsiK_TuneCUEP8M1_5020GeV_BPHMod_filter_step3_20151105/step3_RAW2DIGI_L1Reco_RECO_756_1_ecf.root'
-#ivars.inputFiles='file:/data/twang/MC_samples/Pythia8_BdToJpsiKstar_TuneCUEP8M1_5020GeV_BPHMod_filter_GEN_SIM_PU_20151105/Pythia8_BdToJpsiKstar_TuneCUEP8M1_5020GeV_BPHMod_filter_step3_20151105/step3_RAW2DIGI_L1Reco_RECO_698_2_gsq.root'
-#ivars.inputFiles='file:/data/twang/MC_samples/Pythia8_BsToJpsiPhi_TuneCUEP8M1_5020GeV_BPHMod_filter_GEN_SIM_PU_20151105/Pythia8_BsToJpsiPhi_TuneCUEP8M1_5020GeV_BPHMod_filter_step3_PU_20151105/step3_RAW2DIGI_L1Reco_RECO_721_1_JPr.root'
-#ivars.inputFiles='file:/data/twang/MC_samples/Pythia8_5020GeV_DstarD0kpi_755patch3_GEN_SIM_PU_20151120/Pythia8_5020GeV_DstarD0kpi_755patch3_step3_20151120/step3_RAW2DIGI_L1Reco_RECO_623_1_QKI.root'
-#ivars.inputFiles='file:/data/twang/MC_samples/Pythia8_5020GeV_DstarD0kpipipi_755patch3_GEN_SIM_PU_20151120/Pythia8_5020GeV_DstarD0kpipipi_755patch3_step3_20151120/step3_RAW2DIGI_L1Reco_RECO_614_1_jV8.root'
-#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIOniaL1DoubleMu0/AOD/PromptReco-v1/000/262/735/00000/B0EC6FA1-4E99-E511-B663-02163E013910.root'#HIOniaL1DoubleMu0
-#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIHardProbes/AOD/PromptReco-v1/000/262/735/00000/FC577170-6C99-E511-9848-02163E014120.root'#HIHardProbes
-#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIHardProbes/RECO/D0Meson-PromptReco-v1/000/262/735/00000/6E423E98-5C99-E511-B72B-02163E0138EE.root'#HIHardProbes
-#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIHardProbes/RECO/D0Meson-PromptReco-v1/000/262/735/00000/E67242E4-5E99-E511-947B-02163E0127B4.root'#HIHardProbes
-#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias1/AOD/PromptReco-v1/000/262/726/00000/EE7F4A63-4599-E511-9CE5-02163E013850.root'#HIMinimumBias1
-#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias2/AOD/PromptReco-v1/000/262/548/00000/FA165E36-1F9A-E511-9D40-02163E011B92.root'#HIMinimumBias2
-#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias2/AOD/PromptReco-v1/000/263/757/00001/FCC156B2-F0BA-E511-95B6-02163E0146FF.root'#HIMinimumBias2
-#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias3/AOD/PromptReco-v1/000/263/233/00000/048B4DED-38A7-E511-8C73-02163E01183A.root'#HIMinimumBias3
-#ivars.inputFiles='file:/data/twang/Data_samples/HIRun2015/HIMinimumBias3/AOD/PromptReco-v1/000/263/757/00001/FA43C598-BCBA-E511-BAA9-02163E0119F8.root'#HIMinimumBias3
-#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/PbPb_HiMB5_n10952.root'
-#ivars.inputFiles='file:/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/TestSample/Ds_PbPb_MC_phikkpi_step2_Reco.root'
-ivars.inputFiles='file:/mnt/hadoop/store/user/chengchi/Ds_PbPbMC_180223/Ds_phikkpi_PbPb/Reco_Ds_phikkpi_PbPb_pt4_Pythia8_180309/180309_231941/0000/Ds_PbPb_step2_Reco_81.root'
-
-ivars.outputFile='Dsfinder_PbPb.root'
-if runOnMC:
-    ivars.outputFile='Dsfinder_PbPb_mc.root'
-
+# ivars.inputFiles='root://cms-xrd-global.cern.ch//store/group/hi/chengchi/Ds_2018PbPbMC/Ds_Prompt_phikkpi_PbPb2018/Reco_PbPb2018_Ds_Prompt_phikkpi_ph100_Pythia8__080321/180803_191440/0000/step2_RAW2DIGI_L1Reco_RECO_94.root' # Ds pthat100
+#ivars.inputFiles='file:test_files/step2_RAW2DIGI_L1Reco_RECO_970.root' # Ds pthat100
+#ivars.inputFiles='/store/group/hi/chengchi/Ds_2018PbPbMC/Ds_Prompt2018_phikkpi_PbPb/Reco_PbPb2018_Ds_Prompt_phikkpi_ph20_Pythia8__102101/181021_154143/0000/step2_RAW2DIGI_L1Reco_RECO_99.root'
+# ivars.inputFiles='file:/afs/cern.ch/work/c/chengchi/work/EPR/2018_Spectra/DIGI_RECO/CMSSW_10_3_1/src/step2_RAW2DIGI_L1Reco_RECO.root'
+ivars.inputFiles='/store/group/hi/chengchi/Ds_2018PbPbMC/Ds_Prompt2018_phikkpi_PbPb/Reco_PbPb2018_Ds_Prompt_phikkpi_ph100_Pythia8_1104_CMS1031/181104_004145/0000/step2_RAW2DIGI_L1Reco_RECO_99.root'
+ivars.outputFile='finder_PbPb.root'
 ivars.parseArguments()# get and parse the command line arguments
 
 ### Custom options
 ########## MUST CUSTOMIZE THE FOLLOWING THREE ##########
 ### PbPb B/Dfinder recommended setting, choose only one from them or set all to false and made your own setting
-PbPbDs = 1
+PbPb2018 = 1
 PbPbBdefault = 0
-PbPbBs = 0
 PbPbDHPdefault = 0
 PbPbDMBdefault = 0
 PbPbBD0PiHP = 0
 PbPbBD0PiMB = 0
-optSum = PbPbDs + PbPbBdefault + PbPbBs + PbPbDHPdefault + PbPbDMBdefault + PbPbBD0PiHP + PbPbBD0PiMB 
+optSum = PbPb2018 + PbPbBdefault + PbPbDHPdefault + PbPbDMBdefault + PbPbBD0PiHP + PbPbBD0PiMB 
+
+### Run on MC?
+runOnMC = True
 
 ### Use AOD event filter
 RunOnAOD = True
@@ -72,11 +43,12 @@ UseGenPlusSim = False
 CentralityFilter = False
 
 ### Vertex/Track label
-VtxLabel = "hiSelectedVertex"
-#TrkLabel = "hiGeneralTracks"
+VtxLabel = "offlinePrimaryVerticesWithBS"
+# VtxLabel = "offlinePrimaryVertices"
+TrkLabel = "generalTracks"
 
 ### Set maxEvents
-### process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(10))
+process.maxEvents = cms.untracked.PSet(input = cms.untracked.int32(100))
 
 ### output module
 process.out = cms.OutputModule("PoolOutputModule",
@@ -116,29 +88,6 @@ process.load("Configuration.StandardSequences.MagneticField_cff")
 #process.load("Configuration.Geometry.GeometryIdeal_cff")
 #process.load("Configuration.StandardSequences.MagneticField_AutoFromDBCurrent_cff")
 
-#overwrite GT for centrality table for Cymbal5Ev8 tune
-if runOnMC:
-		process.GlobalTag.snapshotTime = cms.string("9999-12-31 23:59:59.000")
-		process.GlobalTag.toGet.extend([
-   		cms.PSet(record = cms.string("HeavyIonRcd"),
-      		tag = cms.string("CentralityTable_HFtowers200_HydjetCymbal5Ev8_v758x01_mc"),
-      		connect = cms.string("frontier://FrontierProd/CMS_CONDITIONS"),
-      		label = cms.untracked.string("HFtowersHydjetCymbal5Ev8")
-   		),
-		])
-
-
-
-
-#####refit PV with HI vertex fitter###
-process.load('RecoHI.HiTracking.HIPixelAdaptiveVertex_cfi')
-process.hiOfflinePrimaryVertices = process.hiPixelAdaptiveVertex.clone(TrackLabel = cms.InputTag("hiGeneralTracks"))
-process.hiOfflinePrimaryVertices.TkFilterParameters.minSiliconLayersWithHits = cms.int32(5)
-
-process.hiBestOfflinePrimaryVertex = cms.EDFilter("HIBestVertexSelection",src = cms.InputTag("hiOfflinePrimaryVertices"), maxNumber = cms.uint32(1))
-#####
-
-
 ### All relevent GlobalTags
 globalTag = ""
 #MC
@@ -155,7 +104,9 @@ if runOnMC:
 	#globalTag = '75X_mcRun2_HeavyIon_v1'##PbPb for 7_5_0
 	#globalTag = '75X_mcRun2_HeavyIon_v4'##PbPb for 7_5_3_patch1
 	#globalTag = 'auto:run2_mc_HIon'
-    globalTag = '75X_mcRun2_HeavyIon_v13'
+    # globalTag = '75X_mcRun2_HeavyIon_v13'
+    globalTag = 'auto:phase1_2018_realistic'
+    # globalTag = '100X_upgrade2018_realistic_v10'
 #Data
 else:
 	#globalTag = 'FT_53_V6_AN2::All'#for 2012AB
@@ -168,8 +119,7 @@ else:
 	#globalTag = 'GR_R_74_V8A::All'##CMSSW_7_4_0_pre8 PbPb
 	#globalTag = 'GR_R_74_V12A::All'##CMSSW_7_4_2 PbPb
 	#globalTag = '75X_dataRun2_v2'##CMSSW_7_5_0 PbPb
-	#globalTag = 'auto:run2_data'
-	globalTag = '75X_dataRun2_v13'
+	globalTag = 'auto:run2_data'
 
 from Configuration.AlCa.GlobalTag_condDBv2 import GlobalTag
 process.GlobalTag = GlobalTag(process.GlobalTag, globalTag, '')
@@ -183,14 +133,15 @@ process.load("RecoHI.HiCentralityAlgos.CentralityBin_cfi")
 if not runOnMC:
 	process.centralityBin.Centrality = cms.InputTag("hiCentrality")
 	process.centralityBin.centralityVariable = cms.string("HFtowers")
-if runOnMC:
-	process.centralityBin.Centrality = cms.InputTag("hiCentrality")
-	process.centralityBin.centralityVariable = cms.string("HFtowers")
-	process.centralityBin.nonDefaultGlauberModel = cms.string("HydjetCymbal5Ev8")
-process.centrality_path = cms.Path(process.centralityBin)
+# process.centrality_path = cms.Path(process.centralityBin)
 
 ### Run the hiEvtAnalyzer sequence
-process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi')
+if runOnMC:
+    process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_mc_cfi')
+else:
+    process.load('HeavyIonsAnalysis.EventAnalysis.hievtanalyzer_data_cfi')
+process.hiEvtAnalyzer.Vertex = cms.InputTag("offlinePrimaryVertices")
+process.hiEvtAnalyzer.doCentrality = cms.bool(False)
 process.evtAna = cms.Path(process.hiEvtAnalyzer)
 if runOnMC:
 	process.hiEvtAnalyzer.doMC = cms.bool(True)
@@ -198,9 +149,12 @@ if runOnMC:
 	#process.evtAna = cms.Path(process.heavyIon*process.hiEvtAnalyzer)
 
 ### Run HLT info sequence
-process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff')
-from HeavyIonsAnalysis.EventAnalysis.dummybranches_cff import addHLTdummybranches
-addHLTdummybranches(process)
+# process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cff') // not exist in 10_3_1 forest pacakage now
+process.load('HeavyIonsAnalysis.EventAnalysis.hltanalysis_cfi')
+from HeavyIonsAnalysis.EventAnalysis.dummybranches_cff import addDummyBranchesForHLT
+addDummyBranchesForHLT(process)
+# from HeavyIonsAnalysis.EventAnalysis.dummybranches_cff import addHLTdummybranches
+# addHLTdummybranches(process) // modified in 10_3_1
 process.hltanalysis.OfflinePrimaryVertices0 = cms.InputTag(VtxLabel)
 #if HIFormat:
     #process.hltanalysis.mctruth = cms.InputTag("hiGenParticles")# Will cause segmentation violation
@@ -208,20 +162,45 @@ process.hltanalysis.OfflinePrimaryVertices0 = cms.InputTag(VtxLabel)
     #process.hltanalysis.hltresults = cms.InputTag("TriggerResults","","HISIGNAL")
     #process.hltanalysis.l1GtObjectMapRecord = cms.InputTag("hltL1GtObjectMap::HISIGNAL")
 process.hltAna = cms.Path(process.hltanalysis)
-##process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_PbPb_cfi') ## not necessary for Ds
-##process.hltObj = cms.Path(process.hltobject)
+## process.load('HeavyIonsAnalysis.EventAnalysis.hltobject_PbPb_cfi') // tempremove for 10_3_1
+# process.hltObj = cms.Path(process.hltobject)
+process.load('HeavyIonsAnalysis.EventAnalysis.skimanalysis_cfi')
+
 
 ### Set basic filter
 # Common offline event selection
 process.load('HeavyIonsAnalysis.JetAnalysis.EventSelection_cff')
-process.pcollisionEventSelection = cms.Path(process.collisionEventSelectionAOD)
-process.pHBHENoiseFilterResultProducer = cms.Path( process.HBHENoiseFilterResultProducer )
-process.HBHENoiseFilterResult = cms.Path(process.fHBHENoiseFilterResult)
-process.HBHENoiseFilterResultRun1 = cms.Path(process.fHBHENoiseFilterResultRun1)
-process.HBHENoiseFilterResultRun2Loose = cms.Path(process.fHBHENoiseFilterResultRun2Loose)
-process.HBHENoiseFilterResultRun2Tight = cms.Path(process.fHBHENoiseFilterResultRun2Tight)
-process.HBHEIsoNoiseFilterResult = cms.Path(process.fHBHEIsoNoiseFilterResult)
-process.pprimaryVertexFilter = cms.Path(process.primaryVertexFilter )
+# process.pHBHENoiseFilterResultProducer = cms.Path(process.HBHENoiseFilterResultProducer)
+# process.HBHENoiseFilterResult = cms.Path(process.fHBHENoiseFilterResult)
+# process.HBHENoiseFilterResultRun1 = cms.Path(process.fHBHENoiseFilterResultRun1)
+# process.HBHENoiseFilterResultRun2Loose = cms.Path(process.fHBHENoiseFilterResultRun2Loose)
+# process.HBHENoiseFilterResultRun2Tight = cms.Path(process.fHBHENoiseFilterResultRun2Tight)
+# process.HBHEIsoNoiseFilterResult = cms.Path(process.fHBHEIsoNoiseFilterResult)
+
+process.PAprimaryVertexFilter = cms.EDFilter("VertexSelector",
+    src = cms.InputTag("offlinePrimaryVertices"),
+    cut = cms.string("!isFake && abs(z) <= 25 && position.Rho <= 2 && tracksSize >= 2"),
+    filter = cms.bool(True), # otherwise it won't filter the events
+)
+
+process.NoScraping = cms.EDFilter("FilterOutScraping",
+    applyfilter = cms.untracked.bool(True),
+    debugOn = cms.untracked.bool(False),
+    numtrack = cms.untracked.uint32(10),
+    thresh = cms.untracked.double(0.25)
+)
+
+process.pPAprimaryVertexFilter = cms.Path(process.PAprimaryVertexFilter)
+process.pBeamScrapingFilter=cms.Path(process.NoScraping)
+
+process.load("HeavyIonsAnalysis.VertexAnalysis.PAPileUpVertexFilter_cff")
+
+process.pVertexFilterCutG = cms.Path(process.pileupVertexFilterCutG)
+process.pVertexFilterCutGloose = cms.Path(process.pileupVertexFilterCutGloose)
+process.pVertexFilterCutGtight = cms.Path(process.pileupVertexFilterCutGtight)
+process.pVertexFilterCutGplus = cms.Path(process.pileupVertexFilterCutGplus)
+process.pVertexFilterCutE = cms.Path(process.pileupVertexFilterCutE)
+process.pVertexFilterCutEandG = cms.Path(process.pileupVertexFilterCutEandG)
 
 process.load('HeavyIonsAnalysis.Configuration.hfCoincFilter_cff')
 process.phfCoincFilter1 = cms.Path(process.hfCoincFilter)
@@ -230,20 +209,20 @@ process.phfCoincFilter3 = cms.Path(process.hfCoincFilter3)
 process.phfCoincFilter4 = cms.Path(process.hfCoincFilter4)
 process.phfCoincFilter5 = cms.Path(process.hfCoincFilter5)
 
-process.pclusterCompatibilityFilter = cms.Path(process.clusterCompatibilityFilter)
-
 process.pAna = cms.EndPath(process.skimanalysis)
+
+####
 
 ### finder building block
 from Bfinder.finderMaker.finderMaker_75X_cff import finderMaker_75X
-finderMaker_75X(process, AddCaloMuon, runOnMC, HIFormat, UseGenPlusSim)
+finderMaker_75X(process, AddCaloMuon, runOnMC, HIFormat, UseGenPlusSim, VtxLabel, TrkLabel)
 process.p = cms.Path(process.finderSequence)
 ## DeDx info not in PbPb data
 process.Bfinder.readDedx = cms.bool(False)
 process.Dfinder.readDedx = cms.bool(False)
-
 process.Dfinder.makeDntuple = cms.bool(True)
 process.Bfinder.makeBntuple = cms.bool(True)
+process.Dfinder.MVAMapLabel = cms.InputTag(TrkLabel,"MVAValues")
 process.Bfinder.Bchannel = cms.vint32(
     0,#RECONSTRUCTION: J/psi + K
     0,#RECONSTRUCTION: J/psi + Pi
@@ -266,9 +245,16 @@ process.Dfinder.Dchannel = cms.vint32(
     0,#RECONSTRUCTION: D0bar(K+pi-)pi- : D-*
     0,#RECONSTRUCTION: D0(K-pi-pi+pi+)pi+ : D+*
     0,#RECONSTRUCTION: D0bar(K+pi+pi-pi-)pi- : D-*
+    0,#RECONSTRUCTION: D0bar(k+pi-)pi+
+    0,#RECONSTRUCTION: D0(k-pi+)pi-
+    0,#RECONSTRUCTION: p+k-pi-:lambdaC+
+    0#RECONSTRUCTION: p-k+pi+:lambdaCbar-
+
+
+
 )
 ## PbPb Bfinder setting on DoubleMu
-if (PbPbBdefault or PbPbBs) and optSum is 1:
+if PbPbBdefault and optSum is 1:
     process.Bfinder.tkPtCut = cms.double(0.8)#before fit
     process.Bfinder.jpsiPtCut = cms.double(0.0)#before fit
     process.Bfinder.bPtCut = cms.vdouble(5.0, 5.0, 5.0, 5.0, 5.0, 5.0, 5.0)#before fit
@@ -316,51 +302,82 @@ if (PbPbBdefault or PbPbBs) and optSum is 1:
                                                             "hltHIDimuonOpenOSm2p5to4p5L3Filter",
                                                             "hltHIDimuonOpenOSm7to14L3Filter")
     process.Bfinder.makeBntuple = cms.bool(False)
-    if PbPbBs:
-        process.Bfinder.bPtCut = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 10.0, 0.0)#before fit
-        process.Bfinder.Bchannel = cms.vint32(0, 0, 0, 0, 0, 1, 0)
-        process.Bfinder.doTkPreCut = cms.bool(True)    
     process.p = cms.Path(process.BfinderSequence)
 ## PbPb Dfinder setting on HardProbe
-if PbPbDs and optSum is 1:
-		process.Dfinder.makeDntuple = cms.bool(False)
-		process.Dfinder.printInfo = cms.bool(False)
-		process.Dfinder.tkPtCut = cms.double(1.0)#before fit
-		process.Dfinder.tkEtaCut = cms.double(1.5)
-		process.Dfinder.dPtCut = cms.vdouble(3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0, 3.0)#before fit //# need to increase to reduce file size , set 3 or more based on 30-100 result
-		process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.)
-#		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-#		process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-		process.Dfinder.tktkRes_masswindowCut = cms.double(0.04) ## 0.1 default
-		process.Dfinder.Dchannel = cms.vint32(0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
-		process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
-		process.Dfinder.dRapidityCut = cms.vdouble(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1)
-		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
-#		process.p = cms.Path(process.DfinderSequence)
-		process.p = cms.Path(process.hiOfflinePrimaryVertices * process.hiBestOfflinePrimaryVertex * process.DfinderSequence) ## pbpb30 do not turned on this, need to rerun for PVReFit
 if PbPbDHPdefault and optSum is 1:
     process.Dfinder.tkPtCut = cms.double(2.5)#before fit
-    process.Dfinder.dPtCut = cms.vdouble(0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)#before fit
-    process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.)
-    process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-    process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-    process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0., 0., 0., 0., 0., 0.)
-    process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0., 0., 0., 0., 0., 0.)
-    process.Dfinder.Dchannel = cms.vint32(1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0, 0)
+    process.Dfinder.dPtCut                          = cms.vdouble(4.0,                4.0,  1.0,        1.0,  1.0,           1.0,   4.0,               4.0,  1.0,            1.0,  1.0,            1.0,  1.0,           1.0) #before fit
+    process.Dfinder.dCutSeparating_PtVal            = cms.vdouble(4.,                 4.,   5.,         5.,   5.,            5.,    4.,                4.,   5.,             5.,   5.,             5.,   5.,            5.)
+    process.Dfinder.tktkRes_svpvDistanceCut_lowptD  = cms.vdouble(0.,                 0.,   0.,         0.,   0.,            0.,    0.,                0.,   0.,             0.,   2.5,            2.5,  2.5,           2.5)
+    process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0.,                 0.,   0.,         0.,   0.,            0.,    0.,                0.,   0.,             0.,   2.5,            2.5,  2.5,           2.5)
+    process.Dfinder.svpvDistanceCut_lowptD          = cms.vdouble(4.,                 4.,   0.,         0.,   0.,            0.,    4.0,               4.0,  0.,             0.,   0.,             0.,   0.,            0.)
+    process.Dfinder.svpvDistanceCut_highptD         = cms.vdouble(2.5,                2.5,  0.,         0.,   0.,            0.,    2.5,               2.5,  0.,             0.,   0.,             0.,   0.,            0.)
+    process.Dfinder.tktkRes_dCutSeparating_PtVal    = cms.vdouble(0.,                 0.,   0.,         0.,   0.,            0.,    0.,                0.,   0.,             0.,   0.,             0.,   7.,            7.)
+    process.Dfinder.tktkRes_dPtCut                  = cms.vdouble(0.0,                0.0,  0.0,        0.0,  0.0,           0.0,   0.0,               0.0,  0.0,            0.0,  0.0,            0.0,  0.0,           0.0) #before fit
+    process.Dfinder.tktkRes_VtxChiProbCut           = cms.vdouble(0.,                 0.,   0.,         0.,   0.,            0.,    0.,                0.,   0.,             0.,   0.,             0.,   0.05,          0.05)
+    process.Dfinder.tktkRes_alphaCut                = cms.vdouble(999.,               999., 999.,       999., 999.,          999.,  999.,              999., 999.,           999., 999.,           999., 999.,          999.)
+    process.Dfinder.tktkRes_svpvDistanceCut_lowptD  = cms.vdouble(0.,                 0.,   0.,         0.,   0.,            0.,    0.,                0.,   0.,             0.,   0.,             0.,   0.,            0.)
+    process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0.,                 0.,   0.,         0.,   0.,            0.,    0.,                0.,   0.,             0.,   0.,             0.,   0.,            0.)
+    #                                               = cms.vint32(D0bar(D0bar(K+pi-)), D0,   D+(K-2pi+), D-,   D0(K-pi-2pi+), D0bar, Ds+(phi(K+K-)pi+), Ds-,  D*+(D0(2p)pi+), D*-,  D*+(D0(4p)pi+), D*-,  B+(D0(2p)pi+), B-)
+    process.Dfinder.Dchannel                        = cms.vint32(0,                   0,    0,          0,    0,             0,     1,                 1,    0,              0,    0,              0,    0,             0)
     process.p = cms.Path(process.DfinderSequence)
 ## PbPb Dfinder setting on MB
-if PbPbDMBdefault and optSum is 1:
-    process.Dfinder.tkPtCut = cms.double(0.7)#before fit
-    process.Dfinder.dPtCut = cms.vdouble(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)#before fit
+
+#if PbPbDMBdefault and optSum is 1:
+#    process.Dfinder.tkPtCut = cms.double(0.7)#before fit
+#    process.Dfinder.dPtCut = cms.vdouble(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0)#before fit
+#    process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.)
+#    process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+#    process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+#    process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 4.0, 4.0, 0., 0., 0., 0., 0., 0.)
+#    process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0., 0., 0., 0., 0., 0.)
+#    process.Dfinder.Dchannel = cms.vint32(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+#    process.p = cms.Path(process.DfinderSequence)
+
+#####copy from MC 2015
+
+if PbPb2018 and optSum is 1:
+    process.Dfinder.makeDntuple = cms.bool(True)
+    process.Dfinder.printInfo = cms.bool(False)
+    process.Dfinder.tkPtCut = cms.double(1.0)#before fit
+    process.Dfinder.tkEtaCut = cms.double(1.5)
+    process.Dfinder.dPtCut = cms.vdouble(2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 0.0, 0.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0)
     process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.)
-    process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-    process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-    process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 4.0, 4.0, 0., 0., 0., 0., 0., 0.)
-    process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0., 0., 0., 0., 0., 0.)
-    process.Dfinder.Dchannel = cms.vint32(1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0)
+#   process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+#   process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+    process.Dfinder.tktkRes_masswindowCut = cms.double(0.04) ## 0.1 default
+    process.Dfinder.Dchannel = cms.vint32(1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
+    process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 999.9 ,999.9 , 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
+    process.Dfinder.dRapidityCut = cms.vdouble(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1)
+    process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
     process.p = cms.Path(process.DfinderSequence)
+
+if PbPbDMBdefault and optSum is 1:
+    process.Dfinder.makeDntuple = cms.bool(True)
+    process.Dfinder.printInfo = cms.bool(False)
+    process.Dfinder.tkPtCut = cms.double(2.5)#before fit
+    process.Dfinder.tkEtaCut = cms.double(1.2)
+    process.Dfinder.dPtCut = cms.vdouble(1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 7.0, 7.0)#before fit
+    process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 8., 8.)
+    process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+    process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+    process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 4.0, 4.0, 0., 0., 0., 0., 0., 0., 0., 0.)
+    process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0., 0., 0., 0., 0., 0., 0., 0.)
+    process.Dfinder.Dchannel = cms.vint32(0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1)
+    process.Dfinder.alphaCut = cms.vdouble(999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0, 999.0)
+    process.Dfinder.dRapidityCut = cms.vdouble(10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 10.0, 1.1, 1.1)
+    process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.05, 0.05)
+    process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0)
+    process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 2.0, 2.0)
+#    process.p = cms.Path(process.hiOfflinePrimaryVertices * process.hiBestOfflinePrimaryVertex * process.DfinderSequence)
+    process.p = cms.Path(process.DfinderSequence)
+
+
+
+
+
 ## PbPB B to D0 Pi channel on HardProbe
 if PbPbBD0PiHP and optSum is 1:
     process.Dfinder.tkPtCut = cms.double(2.5)#before fit
@@ -407,3 +424,4 @@ if CentralityFilter:
     process.filter = cms.Sequence(process.cenfilterClone)
     for path in process.paths:
        getattr(process,path)._seq = process.filter * getattr(process,path)._seq
+

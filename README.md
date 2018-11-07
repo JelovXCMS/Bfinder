@@ -30,7 +30,7 @@ from Bfinder.finderMaker.finderMaker_75X_cff import finderMaker_75X
 finderMaker_75X(process, AddCaloMuon, runOnMC, HIFormat, UseGenPlusSim, VtxLabel, TrkLabel)
 ```
 
-pPb
+pPb /2018 PbPb
 -----
 
 ```python
@@ -46,11 +46,35 @@ TrkLabel = "generalTracks"
 from Bfinder.finderMaker.finderMaker_75X_cff import finderMaker_75X
 finderMaker_75X(process, AddCaloMuon, runOnMC, HIFormat, UseGenPlusSim, VtxLabel, TrkLabel)
 ### MVA label changed in pPb data CMSSW8XX
-process.Bfinder.MVAMapLabel = cms.InputTag(TrkLabel,"MVAValues")
+# process.Bfinder.MVAMapLabel = cms.InputTag(TrkLabel,"MVAValues")
 process.Dfinder.MVAMapLabel = cms.InputTag(TrkLabel,"MVAValues")
+PbPb2018 = 1
+optSum = PbPb2018
+
+if PbPb2018 and optSum is 1:
+    process.Dfinder.makeDntuple = cms.bool(False)
+    process.Dfinder.printInfo = cms.bool(False)
+    process.Dfinder.tkPtCut = cms.double(1.0)#before fit
+    process.Dfinder.tkEtaCut = cms.double(1.5)
+    process.Dfinder.dPtCut = cms.vdouble(2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 0.0, 0.0, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0)
+    process.Dfinder.dCutSeparating_PtVal = cms.vdouble(5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5., 5.)
+#   process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+#   process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
+    process.Dfinder.tktkRes_masswindowCut = cms.double(0.04) ## 0.1 default
+    process.Dfinder.Dchannel = cms.vint32(1, 1, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
+    process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 999.9 ,999.9 , 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
+    process.Dfinder.dRapidityCut = cms.vdouble(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1)
+    process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+    process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 2.0, 2.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0)
+#    process.p = cms.Path(process.DfinderSequence)
+
+# Add process.DfinderSequence to cms.Path
+
+
 ```
 
-PbPb
+2015 PbPb
 -----
 
 ```python

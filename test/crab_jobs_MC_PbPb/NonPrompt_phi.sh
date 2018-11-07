@@ -1,6 +1,0 @@
-crab submit crab_PbPb_MC_NonPrompt_phikkpi_pt0_041700.py
-crab submit crab_PbPb_MC_NonPrompt_phikkpi_pt19ph9_041700.py
-crab submit crab_PbPb_MC_NonPrompt_phikkpi_pt1p8_041700.py
-crab submit crab_PbPb_MC_NonPrompt_phikkpi_pt3p8_041700.py
-crab submit crab_PbPb_MC_NonPrompt_phikkpi_pt5p7ph2_041700.py
-crab submit crab_PbPb_MC_NonPrompt_phikkpi_pt9p5ph3p5_041700.py
