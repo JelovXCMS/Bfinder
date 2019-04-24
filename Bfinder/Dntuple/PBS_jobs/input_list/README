@@ -8,6 +8,8 @@ replace /mnt/hadoop/ by  root://xrootd.rcac.purdue.edu/   to let hastead able to
 use sed to do all in once
 sed -i 's/\/mnt\/hadoop/root:\/\/xrootd.rcac.purdue.edu\//g' *filename*
 
+sed -i 's/user\/jisun/group\/hi\/chengchi/g' *filename*
+
 
 
 replace the folderPath & filelistname_lis.txt

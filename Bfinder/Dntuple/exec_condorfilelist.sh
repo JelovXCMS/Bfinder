@@ -3,7 +3,8 @@
 echo `hostname`
 echo `date`
 export SCRAM_ARCH=slc6_amd64_gcc491
-source /apps/osg/cmssoft/cmsset_default.sh
+source /cvmfs/cms.cern.ch/cmsset_default.sh 
+# source /apps/osg/cmssoft/cmsset_default.sh
 export X509_USER_PROXY=/home/peng43/.myproxy
 DIR="Bfinder/Bfinder/Dntuple"   ## this is where loop.exe exist
 cd /home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/working_DsFinder/CMSSW_7_5_8_patch3/src

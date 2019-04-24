@@ -269,14 +269,18 @@ if ppDs and optSum is 1:
 		process.Dfinder.tkPtCut = cms.double(0.7)#before fit
 		process.Dfinder.tkEtaCut = cms.double(2.0)
 		process.Dfinder.dPtCut = cms.vdouble(2.0, 2.0, 2.0, 2.0, 2.0, 2.0, 1.8, 1.8, 2.0, 2.0, 2.0, 2.0, 2.0, 2.0)#before fit , 18220 data set 1
-		process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.25, 0.25, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
+		# process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.25, 0.25, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
+		process.Dfinder.alphaCut = cms.vdouble(0.2, 0.2, 0.2, 0.2, 0.2, 0.2, 3.2, 3.2, 0.2, 0.2, 0.2, 0.2, 0.2, 0.2)
 		process.Dfinder.dRapidityCut = cms.vdouble(1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1, 1.1)
-		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.02, 0.02, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0)
+		# process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.02, 0.02, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0)
+		process.Dfinder.VtxChiProbCut = cms.vdouble(0.05, 0.05, 0.05, 0.05, 0.05, 0.05, 0.00, 0.00, 0.05, 0.05, 0.0, 0.0, 0.0, 0.0)
 		process.Dfinder.dCutSeparating_PtVal = cms.vdouble(4., 4., 4., 4., 4., 4., 4., 4., 4., 4., 4., 4., 4., 4.) # <Val:lowpt  
 #		process.Dfinder.tktkRes_svpvDistanceCut_lowptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5) #set 0
 #		process.Dfinder.tktkRes_svpvDistanceCut_highptD = cms.vdouble(0., 0., 0., 0., 0., 0., 0., 0., 2.5, 2.5, 2.5, 2.5, 2.5, 2.5)
-		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 1.5, 1.5, 0., 0., 0., 0., 0., 0.) #set 2.0 for later, first 18220 data sample set 0
-		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 1.5, 1.5, 0., 0., 0., 0., 0., 0.)
+		# process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 1.5, 1.5, 0., 0., 0., 0., 0., 0.) #set 2.0 for later, first 18220 data sample set 0
+		process.Dfinder.svpvDistanceCut_lowptD = cms.vdouble(4.0, 4.0, 2.5, 2.5, 2.5, 2.5, 0., 0., 1., 0., 0., 0., 0., 0.) #set 2.0 for later, first 18220 data sample set 0
+		# process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 1.5, 1.5, 0., 0., 0., 0., 0., 0.)
+		process.Dfinder.svpvDistanceCut_highptD = cms.vdouble(2.5, 2.5, 2.5, 2.5, 2.5, 2.5, 0., 0., 1., 0., 0., 0., 0., 0.)
 		process.Dfinder.Dchannel = cms.vint32(0, 0, 0, 0, 0, 0, 1, 1, 0, 0, 0, 0, 0, 0)
 		process.p = cms.Path(process.DfinderSequence)
 

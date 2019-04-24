@@ -111,6 +111,8 @@ class Dfinder : public edm::EDAnalyzer
         std::vector<double> ResToNonRes_PtAsym_min_;
         std::vector<double> ResToNonRes_PtAsym_max_;
         double tktkRes_masswindowCut_ =0.0 ;
+        double alpha2DBSCut_ =0.0 ;
+        double svpv2DBSSigCut_ =0.0 ;
         bool RunOnMC_;
         bool doTkPreCut_;
         bool makeDntuple_;
@@ -243,6 +245,8 @@ Dfinder::Dfinder(const edm::ParameterSet& iConfig):theConfig(iConfig)
     Dedx_Token2_ = consumes<edm::ValueMap<reco::DeDxData> >(iConfig.getParameter<edm::InputTag>("Dedx_Token2"));
 
     if (iConfig.exists("tktkRes_masswindowCut")) { tktkRes_masswindowCut_ = iConfig.getParameter<double>("tktkRes_masswindowCut"); }
+    if (iConfig.exists("alpha2DBSCut")) { alpha2DBSCut_ = iConfig.getParameter<double>("alpha2DBSCut_"); }
+    if (iConfig.exists("svpv2DBSSigCut")) { svpv2DBSSigCut_ = iConfig.getParameter<double>("svpv2DBSSigCut"); }
     
     //Special TMVA reader for 3 tracks channels
     doTmvaCut_ = iConfig.getParameter<bool>("doTmvaCut");

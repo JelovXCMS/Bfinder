@@ -1,8 +1,8 @@
 #!/bin/sh
 
 # INFILELIST=input_list/Ds_pp_MC_NonPrompt_phikkpi_pt10.lis
-INFILELIST=input_list/Ds_pp_MC_NonPrompt_Phi_pt10.lis
-OUTPUTDIR=/home/peng43/work/Project/Ds_PbPb/CMSSW/DsFinder/working_DsFinder/CMSSW_7_5_8_patch3/src/Bfinder/Bfinder/Dntuple/PBS_jobs/testout/offpp_MC/Ds_NonPrompt_phikkpi_pt10
+INFILELIST=input_list/Dp_pp_MC_pt2.lis
+OUTPUTDIR=/scratch/halstead/p/peng43/Ds_phikkpi/temp
 TotalFiles=$(wc -l < "$INFILELIST")
 StartFiles=0
 isPbPb=0

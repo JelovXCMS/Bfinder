@@ -8,6 +8,10 @@ using namespace std;
 class DntupleBranches
 {//{{{
  public:
+  // TrkInfo
+  int     Trksize; 
+  float   Trkpt[MAX_TRACK];
+
   //EvtInfo
   int     RunNo;
   int     EvtNo;
@@ -48,15 +52,21 @@ class DntupleBranches
   float   DvtxX[MAX_XB];
   float   DvtxY[MAX_XB];
   float   DvtxZ[MAX_XB];
+  float   DvtxXErr[MAX_XB];
+  float   DvtxYErr[MAX_XB];
+  float   DvtxZErr[MAX_XB];
   float   Dd0[MAX_XB];
   float   Dd0Err[MAX_XB];
+  // float   Dd0ErrCor[MAX_XB];
   float   Ddxyz[MAX_XB];
   float   DdxyzErr[MAX_XB];
+  // float   DdxyzErrCor[MAX_XB];
   float   Dchi2ndf[MAX_XB];
   float   Dchi2cl[MAX_XB];
   float   Ddtheta[MAX_XB];
   float   Dlxy[MAX_XB];
   float   Dalpha[MAX_XB];
+  float   Dalpha_BS_2D[MAX_XB];
   float   DsvpvDistance[MAX_XB];
   float   DsvpvDisErr[MAX_XB];
   float   DsvpvDistance_2D[MAX_XB];
@@ -292,6 +302,9 @@ class DntupleBranches
   float   DgendecayvtxX[MAX_XB];
   float   DgendecayvtxY[MAX_XB];
   float   DgendecayvtxZ[MAX_XB];
+  float   DgendecayvtxXtoPv[MAX_XB];
+  float   DgendecayvtxYtoPv[MAX_XB];
+  float   DgendecayvtxZtoPv[MAX_XB];
   int     DgenfromgenPV[MAX_XB];
 
   //#later add Dgen Channel?
@@ -313,11 +326,20 @@ class DntupleBranches
     dnt->Branch("BSx",&BSx);
     dnt->Branch("BSy",&BSy);
     dnt->Branch("BSz",&BSz);
+    
+    dnt->Branch("PVxE",&PVxE);  
+    dnt->Branch("PVyE",&PVyE);
+    dnt->Branch("PVzE",&PVzE);
+  
+    dnt->Branch("Trksize",&Trksize);
+    dnt->Branch("Trkpt",Trkpt,"Trkpt[Trksize]/F");
+ 
+
     if(detailMode)
       {
-        dnt->Branch("PVxE",&PVxE);
-        dnt->Branch("PVyE",&PVyE);
-        dnt->Branch("PVzE",&PVzE);
+        // dnt->Branch("PVxE",&PVxE); // move to default
+        // dnt->Branch("PVyE",&PVyE);
+        // dnt->Branch("PVzE",&PVzE);
         dnt->Branch("BSxErr",&BSxErr);
         dnt->Branch("BSyErr",&BSyErr);
         dnt->Branch("BSzErr",&BSzErr);
@@ -343,15 +365,21 @@ class DntupleBranches
     dnt->Branch("DvtxX",DvtxX,"DvtxX[Dsize]/F");
     dnt->Branch("DvtxY",DvtxY,"DvtxY[Dsize]/F");
     dnt->Branch("DvtxZ",DvtxZ,"DvtxZ[Dsize]/F");
+    dnt->Branch("DvtxXErr",DvtxXErr,"DvtxXErr[Dsize]/F");
+    dnt->Branch("DvtxYErr",DvtxYErr,"DvtxYErr[Dsize]/F");
+    dnt->Branch("DvtxZErr",DvtxZErr,"DvtxZErr[Dsize]/F");
     dnt->Branch("Dd0",Dd0,"Dd0[Dsize]/F");
     dnt->Branch("Dd0Err",Dd0Err,"Dd0Err[Dsize]/F");
+    // dnt->Branch("Dd0ErrCor",Dd0ErrCor,"Dd0ErrCor[Dsize]/F");
     dnt->Branch("Ddxyz",Ddxyz,"Ddxyz[Dsize]/F");
     dnt->Branch("DdxyzErr",DdxyzErr,"DdxyzErr[Dsize]/F");
+    // dnt->Branch("DdxyzErrCor",DdxyzErrCor,"DdxyzErrCor[Dsize]/F");
     dnt->Branch("Dchi2ndf",Dchi2ndf,"Dchi2ndf[Dsize]/F");
     dnt->Branch("Dchi2cl",Dchi2cl,"Dchi2cl[Dsize]/F");
     dnt->Branch("Ddtheta",Ddtheta,"Ddtheta[Dsize]/F");
     dnt->Branch("Dlxy",Dlxy,"Dlxy[Dsize]/F");
     dnt->Branch("Dalpha",Dalpha,"Dalpha[Dsize]/F");
+    dnt->Branch("Dalpha_BS_2D",Dalpha_BS_2D,"Dalpha_BS_2D[Dsize]/F");
     dnt->Branch("DsvpvDistance",DsvpvDistance,"DsvpvDistance[Dsize]/F");
     dnt->Branch("DsvpvDisErr",DsvpvDisErr,"DsvpvDisErr[Dsize]/F");
     dnt->Branch("DsvpvDistance_2D",DsvpvDistance_2D,"DsvpvDistance_2D[Dsize]/F");
@@ -608,6 +636,9 @@ class DntupleBranches
     dnt->Branch("DgendecayvtxX",DgendecayvtxX,"DgendecayvtxX[Dsize]/F");
     dnt->Branch("DgendecayvtxY",DgendecayvtxY,"DgendecayvtxY[Dsize]/F");
     dnt->Branch("DgendecayvtxZ",DgendecayvtxZ,"DgendecayvtxZ[Dsize]/F");
+    dnt->Branch("DgendecayvtxXtoPv",DgendecayvtxXtoPv,"DgendecayvtxXtoPv[Dsize]/F");
+    dnt->Branch("DgendecayvtxYtoPv",DgendecayvtxYtoPv,"DgendecayvtxYtoPv[Dsize]/F");
+    dnt->Branch("DgendecayvtxZtoPv",DgendecayvtxZtoPv,"DgendecayvtxZtoPv[Dsize]/F");
     dnt->Branch("DgenfromgenPV",DgenfromgenPV,"DgenfromgenPV[Dsize]/I");
   }
   
@@ -755,6 +786,12 @@ class DntupleBranches
     TVector3* boost = new TVector3();
     TVector3* D3Vec = new TVector3();
     fillTreeEvt(EvtInfo);
+    Trksize=TrackInfo->size;
+    for(int k=0; k<TrackInfo->size;k++){
+        Trkpt[k]=TrackInfo->pt[k];    
+    }
+
+    // fillTreeTrk(TrackInfo)
     bool zeroCand = true;
     for(int t=0;t<14;t++)
       {
@@ -1034,10 +1071,12 @@ class DntupleBranches
         return 0;
       }
   }
+
   
   void fillTreeEvt(EvtInfoBranches *EvtInfo)
   {
     //Event Info
+    // Trksize = TrackInfo->size;
     RunNo = EvtInfo->RunNo;
     EvtNo = EvtInfo->EvtNo;
     LumiNo = EvtInfo->LumiNo;
@@ -1103,10 +1142,15 @@ class DntupleBranches
     DvtxX[typesize] = DInfo->vtxX[j] - EvtInfo->PVx;
     DvtxY[typesize] = DInfo->vtxY[j] - EvtInfo->PVy;
     DvtxZ[typesize] = DInfo->vtxZ[j] - EvtInfo->PVz;
+    DvtxXErr[typesize] = TMath::Sqrt(DInfo->vtxXErr[j]) ;
+    DvtxYErr[typesize] = TMath::Sqrt(DInfo->vtxYErr[j]) ;
+    DvtxZErr[typesize] = TMath::Sqrt(DInfo->vtxZErr[j]) ;
     Dd0[typesize] = TMath::Sqrt((DInfo->vtxX[j]-EvtInfo->PVx)*(DInfo->vtxX[j]-EvtInfo->PVx)+(DInfo->vtxY[j]-EvtInfo->PVy)*(DInfo->vtxY[j]-EvtInfo->PVy));
-    Dd0Err[typesize] = TMath::Sqrt(DInfo->vtxXErr[j]*DInfo->vtxXErr[j]+DInfo->vtxYErr[j]*DInfo->vtxYErr[j]);
+    // Dd0Err[typesize] = TMath::Sqrt(DInfo->vtxXErr[j]*DInfo->vtxXErr[j]+DInfo->vtxYErr[j]*DInfo->vtxYErr[j]);
+    Dd0Err[typesize] = TMath::Sqrt(DInfo->vtxXErr[j] + DInfo->vtxYErr[j] ); // the Dinfo-<vtxXerr in current version is the vetex.error.cxx , covariance, = sigma^2 
     Ddxyz[typesize] = TMath::Sqrt((DInfo->vtxX[j]-EvtInfo->PVx)*(DInfo->vtxX[j]-EvtInfo->PVx)+(DInfo->vtxY[j]-EvtInfo->PVy)*(DInfo->vtxY[j]-EvtInfo->PVy)+(DInfo->vtxZ[j]-EvtInfo->PVz)*(DInfo->vtxZ[j]-EvtInfo->PVz));
-    DdxyzErr[typesize] = TMath::Sqrt(DInfo->vtxXErr[j]*DInfo->vtxXErr[j]+DInfo->vtxYErr[j]*DInfo->vtxYErr[j]+DInfo->vtxZErr[j]*DInfo->vtxZErr[j]);
+    // DdxyzErr[typesize] = TMath::Sqrt(DInfo->vtxXErr[j]*DInfo->vtxXErr[j]+DInfo->vtxYErr[j]*DInfo->vtxYErr[j]+DInfo->vtxZErr[j]*DInfo->vtxZErr[j]);
+    DdxyzErr[typesize] = TMath::Sqrt(DInfo->vtxXErr[j] + DInfo->vtxYErr[j] + DInfo->vtxZErr[j] );
     Dchi2ndf[typesize] = DInfo->vtxchi2[j]/DInfo->vtxdof[j];
     Dchi2cl[typesize] = TMath::Prob(DInfo->vtxchi2[j],DInfo->vtxdof[j]);
     Ddtheta[typesize] = bP->Angle(*bVtx);
@@ -1119,9 +1163,17 @@ class DntupleBranches
     Ddca[typesize] = DInfo->svpvDistance[j]*TMath::Sin(DInfo->alpha[j]);
     //# add Ddca err & Ddca significance 
 
+    TVector3 svbsVec_corr;
+    svbsVec_corr.SetXYZ(DInfo->vtxX[j]-EvtInfo->BSx + (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz,DInfo->vtxY[j]-EvtInfo->BSy + (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz,0);
+    TVector3 dVec_for2D_corr;
+    dVec_for2D_corr.SetXYZ(DInfo->px[j]+DInfo->pz[j]*EvtInfo->BSdxdz, DInfo->py[j]+DInfo->pz[j]*EvtInfo->BSdydz, 0);
+    Dalpha_BS_2D[typesize] = svbsVec_corr.Angle(dVec_for2D_corr);
+
+
+
     float r2lxyBS = (DInfo->vtxX[j]-EvtInfo->BSx+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz) * (DInfo->vtxX[j]-EvtInfo->BSx+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz)
       + (DInfo->vtxY[j]-EvtInfo->BSy+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz) * (DInfo->vtxY[j]-EvtInfo->BSy+(DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz);
-    float xlxyBS = DInfo->vtxX[j]-EvtInfo->BSx + (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz;
+    float xlxyBS = DInfo->vtxX[j]-EvtInfo->BSx + (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdxdz; // a-b or a+b?
     float ylxyBS = DInfo->vtxY[j]-EvtInfo->BSy + (DInfo->vtxZ[j]-EvtInfo->BSz)*EvtInfo->BSdydz;
     DlxyBS[typesize] = TMath::Sqrt(r2lxyBS);
     DlxyBSErr[typesize] = TMath::Sqrt ((1./r2lxyBS) * ((xlxyBS*xlxyBS)*DInfo->vtxXErr[j] + (2*xlxyBS*ylxyBS)*DInfo->vtxYXErr[j] + (ylxyBS*ylxyBS)*DInfo->vtxYErr[j]) );
@@ -1859,6 +1911,9 @@ class DntupleBranches
     DgendecayvtxX[typesize] = -999;
     DgendecayvtxY[typesize] = -999;
     DgendecayvtxZ[typesize] = -999;
+    DgendecayvtxXtoPv[typesize] = -999;
+    DgendecayvtxYtoPv[typesize] = -999;
+    DgendecayvtxZtoPv[typesize] = -999;
     DgenfromgenPV[typesize] = -999;
     if(!REAL)
       {
@@ -2210,6 +2265,19 @@ class DntupleBranches
                      dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]];
                    } // the mass hypo for this is wrong when reco (should be kpi instead of kk)
                 } // end if for correct pair reco-gen
+                else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]]) == DPLUS_PDGID &&
+                   GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]] &&
+                   GenInfo->mo1[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]) // should be no problem of index mo1-mo1 == -1, D+ matching
+                {
+                   if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]]) == PHI_PDGID &&
+                      TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]) == KAON_PDGID &&
+                      TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]) == KAON_PDGID &&
+                      TMath::Abs(GenInfo->pdgId[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]]) == PION_PDGID )
+                   {
+                     DsGen[typesize]=26633;  // D+->phi(->KK)pi , all matched
+                     dGenIdxRes = GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]];
+                   }
+                } // end D+ matching
                 else if(TMath::Abs(GenInfo->pdgId[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]]) == DpdgId &&
                    GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk3_index[j]]] &&
                    GenInfo->mo1[GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk2_index[j]]]] == GenInfo->mo1[TrackInfo->geninfo_index[DInfo->rftk1_index[j]]]) // wrong pair res combinationa 1
@@ -2334,6 +2402,9 @@ class DntupleBranches
 		DgendecayvtxX[typesize] = GenInfo->vtxX[GenInfo->da1[DgenIndex[typesize]]]; //production vertex of first daughter
 		DgendecayvtxY[typesize] = GenInfo->vtxY[GenInfo->da1[DgenIndex[typesize]]];
 		DgendecayvtxZ[typesize] = GenInfo->vtxZ[GenInfo->da1[DgenIndex[typesize]]];
+		DgendecayvtxXtoPv[typesize] = GenInfo->vtxX[GenInfo->da1[DgenIndex[typesize]]] - EvtInfo->PVx; //production vertex of first daughter
+		DgendecayvtxYtoPv[typesize] = GenInfo->vtxY[GenInfo->da1[DgenIndex[typesize]]] - EvtInfo->PVy;
+		DgendecayvtxZtoPv[typesize] = GenInfo->vtxZ[GenInfo->da1[DgenIndex[typesize]]] - EvtInfo->PVz;
 		//decide if from gen PV or not
 		if( fabs(DgenprodvtxX[typesize] - GenInfo->genPVx) < 0.001 && fabs(DgenprodvtxY[typesize] - GenInfo->genPVy) < 0.001 && fabs(DgenprodvtxZ[typesize] - GenInfo->genPVz) < 0.001 )
 		  DgenfromgenPV[typesize] = 1;
@@ -2417,6 +2488,20 @@ class DntupleBranches
                   }
               }
           }
+       else if(TMath::Abs(GenInfo->pdgId[j])==DPLUS_PDGID&&GenInfo->nDa[j]==2&&GenInfo->da1[j]!=-1&&GenInfo->da2[j]!=-1)
+          {
+            if(TMath::Abs(GenInfo->pdgId[GenInfo->da1[j]])==PHI_PDGID)
+              {
+                if(GenInfo->nDa[GenInfo->da1[j]]==2&&GenInfo->da1[GenInfo->da1[j]]!=-1&&GenInfo->da2[GenInfo->da1[j]]!=-1)
+                  {
+                    if(TMath::Abs(GenInfo->pdgId[GenInfo->da1[GenInfo->da1[j]]])==KAON_PDGID&&TMath::Abs(GenInfo->pdgId[GenInfo->da2[GenInfo->da1[j]]])==KAON_PDGID)
+                      {
+                        if((TMath::Abs(GenInfo->pdgId[GenInfo->da2[j]])==PION_PDGID))
+                          return 10; //Ds phikk pi
+                      }
+                  }
+              }
+            }
         else if (TMath::Abs(GenInfo->pdgId[j])==DPLUS_PDGID&&GenInfo->nDa[j]==3&&GenInfo->da1[j]!=-1&&GenInfo->da2[j]!=-1 && GenInfo->da3[j]!=-1)
           {
             if((TMath::Abs(GenInfo->pdgId[GenInfo->da1[j]])==KAON_PDGID && 

@@ -11,7 +11,7 @@ cat >crab_pp_data_MB${mbN}.py <<EOF
 from CRABClient.UserUtilities import config, getUsernameFromSiteDB
 config = config()
 
-config.General.requestName = 'Dfiner_Data_pp_Ds_phikkpi_MB${mbN}'
+config.General.requestName = 'Dfiner_Data_pp_Ds_phikkpi_MB${mbN}_noAlphaCut'
 config.General.workArea = 'crab_projects'
 config.General.transferOutputs = True
 config.General.transferLogs = False
@@ -24,10 +24,10 @@ config.JobType.psetName = '../finder_pp_75X_cfg.py'
 config.Data.inputDataset = '/MinimumBias${mbN}/Run2015E-PromptReco-v1/AOD'
 config.Data.inputDBS ='global'
 config.Data.splitting = 'FileBased'
-config.Data.unitsPerJob = 2  ## set 4 will lead to memory issue
-config.Data.outLFNDirBase = '/store/user/%s/Dsfinder_phikkpi_180311/pp_data/' % (getUsernameFromSiteDB())
+config.Data.unitsPerJob = 1  ## set 4 will lead to memory issue
+config.Data.outLFNDirBase = '/store/group/hi/%s/Dsfinder_phikkpi_180305/pp_data_noAlphaCut/' % (getUsernameFromSiteDB())
 #config.Data.publication = True
-config.Data.outputDatasetTag = 'Dfinder_Data_pp_Ds_phikkpi_MB${mbN}'
+config.Data.outputDatasetTag = 'Dfinder_Data_pp_Ds_phikkpi_MB${mbN}_noAlphaCut'
 
 config.Data.lumiMask = 'https://cms-service-dqm.web.cern.ch/cms-service-dqm/CAF/certification/Collisions15/5TeV/Cert_262081-262328_5TeV_PromptReco_Collisions15_25ns_JSON.txt'
 
